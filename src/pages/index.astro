@@ -72,29 +72,37 @@ const last_posts = posts.slice(0, 3);
   </div>
 
   const authorsList = [
-    { name: "Foivos Paraperas Papantoniou", url: "https://example.com/foivos" },
-    { name: "Alexandros Lattas", url: "https://example.com/alattas" },
-    { name: "Stylianos Moschoglou", url: "https://example.com/smoschoglou" },
-    { name: "Jiankang Deng", url: "https://example.com/jdeng" }
+    { name: "Foivos Paraperas Papantoniou", url: "#" },
+    { name: "Alexandros Lattas", url: "#" },
+    { name: "Stylianos Moschoglou", url: "#" },
+    { name: "Jiankang Deng", url: "#" }
   ];
   ---
   
+  <!-- WRONG: 
+       authors=[ ... ] will cause syntax errors in Astro/JSX
+  -->
+  
+  <!-- CORRECT: 
+       Put curly braces around arrays or objects in a prop 
+  -->
   <HorizontalCard
     title="Arc2Face: A Foundation Model for ID-Consistent Human Faces"
     img="/post_img.webp"
     url="https://arc2face.github.io/"
     badge="NEW"
     target="_blank"
-    authors={authorsList}
+  
+    authors={authorsList}  <!-- Must have curly braces -->
     publicationInfo="In Proceedings of the European Conference on Computer Vision (ECCV), 2024 (Oral Presentation)"
+  
     bibUrl="https://example.com/arc2face.bib"
     arxivUrl="https://arxiv.org/abs/XXXX.XXXXX"
     projectUrl="https://arc2face.github.io"
-    // if you want or not desc
-    desc="Optional old desc if you still want it"
-    tags={["3D", "Facial"]}
-  >
-  </HorizontalCard>
+  
+    desc="(Optional) Some description..."
+    tags={["3D", "Avatar", "ECCV"]}
+  />
 
   <div class="divider my-0"></div>
   <HorizontalCard
