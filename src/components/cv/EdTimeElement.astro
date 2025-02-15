@@ -2,8 +2,9 @@
 const {
   date,
   educationTitle,
-  university,      // This is the study center name plus location (e.g. "Imperial College London, London, United Kingdom")
-  studyCenterUrl,  // URL for the study center (optional)
+  university,
+  studyCenterUrl,
+  additionalInfo = [],  // optional extra info lines as an array of strings
   supervisor,
   supervisorUrl
 } = Astro.props;
@@ -21,10 +22,10 @@ const {
     <!-- Education Title -->
     <h3 class="font-semibold text-xl">{educationTitle}</h3>
 
-    <!-- Date on a new line, same style as Title -->
+    <!-- Date on a new line -->
     <h3 class="font-semibold text-xl mt-1">{date}</h3>
 
-    <!-- University/Study Center with location -->
+    <!-- University / Study Center -->
     <p class="text-sm mt-1">
       {studyCenterUrl ? (
         <a href={studyCenterUrl} target="_blank" class="text-primary hover:underline">
@@ -35,9 +36,14 @@ const {
       )}
     </p>
 
-    <!-- Supervisor in smaller font -->
+    <!-- Additional optional info lines -->
+    {additionalInfo && additionalInfo.length > 0 && additionalInfo.map((info) => (
+      <p class="text-sm mt-1">{info}</p>
+    ))}
+
+    <!-- Supervisor -->
     <p class="text-sm mt-1">
-      Supervisor: 
+      Supervisor:
       <a 
         href={supervisorUrl} 
         target="_blank" 
