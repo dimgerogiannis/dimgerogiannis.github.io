@@ -1,41 +1,127 @@
 ---
-const { title, img, desc, url, badge, tags, target = "_blank" } = Astro.props;
+const {
+  title,
+  img,
+  desc,         // if you still want it for fallback / compatibility
+  url,
+  badge,
+  tags,
+  target = "_blank",
+  // NEW PROPS
+  authors = [],        // array of { name: string, url: string }
+  publicationInfo = "", // string for italic text
+  bibUrl = "",
+  arxivUrl = "",
+  projectUrl = ""
+} = Astro.props;
+
 import { Image } from "astro:assets";
+
 const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 ---
 
-<div
-  class="rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%]"
->
+<div class="rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%]">
+  {/* If you want the entire card to be clickable, keep the <a> wrapping everything */}
+  {/* If you'd rather have certain buttons clickable but not the whole card, you can move <a> around. */}
   <a href={url} target={target}>
     <div class="hero-content flex-col md:flex-row">
-      {
-        img && (
-          <Image
-            src={img}
-            width={750}
-            height={422}
-            format="webp"
-            alt={title}
-            class="max-w-full md:max-w-[13rem] rounded-lg"
-          />
-        )
-      }
+      {img && (
+        <Image
+          src={img}
+          width={750}
+          height={422}
+          format="webp"
+          alt={title}
+          class="max-w-full md:max-w-[13rem] rounded-lg"
+        />
+      )}
+
       <div class="grow w-full">
+        {/* Title + Badge */}
         <h1 class="text-xl font-bold">
           {title}
           {badge && <div class="badge badge-secondary mx-2">{badge}</div>}
         </h1>
-        <p class="py-1 text-1xl">{desc}</p>
-        <div class="card-actions justify-end">
-          {
-            tags &&
-              tags.map((tag) => (
-                <a href={`${tag_url}/${tag}`} class="badge badge-outline">
-                  {tag}
+
+        {/* FANCY BUTTONS (BibTeX, ArXiv, Project Page) */}
+        <div class="flex flex-wrap gap-2 mb-2 mt-1">
+          {bibUrl && (
+            <a
+              href={bibUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-sm btn-outline"
+              onClick={e => e.stopPropagation()}
+            >
+              BibTeX
+            </a>
+          )}
+          {arxivUrl && (
+            <a
+              href={arxivUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-sm btn-outline"
+              onClick={e => e.stopPropagation()}
+            >
+              ArXiv
+            </a>
+          )}
+          {projectUrl && (
+            <a
+              href={projectUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-sm btn-outline"
+              onClick={e => e.stopPropagation()}
+            >
+              Project Page
+            </a>
+          )}
+        </div>
+
+        {/* AUTHORS */}
+        {authors.length > 0 && (
+          <p class="text-base mb-1">
+            {authors.map((author, idx) => (
+              <>
+                <a
+                  href={author.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="link link-hover text-accent"
+                  onClick={e => e.stopPropagation()}
+                >
+                  {author.name}
                 </a>
-              ))
-          }
+                {idx < authors.length - 1 && ", "}
+              </>
+            ))}
+          </p>
+        )}
+
+        {/* PUBLICATION INFO (italic) */}
+        {publicationInfo && (
+          <p class="italic text-sm text-gray-400 mb-2">
+            {publicationInfo}
+          </p>
+        )}
+
+        {/* (Optional) old desc if you still want to show it */}
+        {desc && (
+          <p class="py-1 text-base">
+            {desc}
+          </p>
+        )}
+
+        {/* TAGS */}
+        <div class="card-actions justify-end">
+          {tags &&
+            tags.map((tag) => (
+              <a href={`${tag_url}/${tag}`} class="badge badge-outline" onClick={e => e.stopPropagation()}>
+                {tag}
+              </a>
+            ))}
         </div>
       </div>
     </div>
