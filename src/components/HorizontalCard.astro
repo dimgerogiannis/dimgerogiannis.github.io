@@ -46,16 +46,16 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
       </h1>
 
       {/* Render each author as a clickable link.
-          The first author is bold, others are normal weight.
-          No extra white text classes so they inherit the default color. */}
+          The first author uses the title's text color (e.g. text-gray-900) and is bold,
+          while the remaining authors use text-gray-500. */}
       {authors && authors.length > 0 && (
-        <p class="text-sm italic text-gray-500">
+        <p class="text-sm italic">
           {authors.map((author, index) => (
             <span key={author.name}>
               <a
                 href={author.homepage}
                 target="_blank"
-                class={`${index === 0 ? "font-bold" : ""} hover:underline`}
+                class={`${index === 0 ? "font-bold text-gray-900" : "text-gray-500"} hover:underline`}
               >
                 {author.name}
               </a>
@@ -85,7 +85,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           </a>
         ))}
 
-        {/* BIB button: if bibCitation is provided, the badge opens a modal; otherwise, link to bibUrl */}
+        {/* BIB button: if bibCitation is provided, open a modal; otherwise, link to bibUrl */}
         {bibCitation ? (
           <label for={`${title}-bib-modal`} class="badge badge-secondary font-bold cursor-pointer">
             BIB
