@@ -11,103 +11,138 @@ const {
   publicationInfo,
   bibUrl,
   arxivUrl,
-  projectUrl
+  projectUrl,
+  // New prop for the modal text:
+  bibCitation
 } = Astro.props;
+
 import { Image } from "astro:assets";
+
+// For tag URLs:
 const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 ---
+
 <div
   class="rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%]"
 >
+  {/* Entire card is clickable */}
   <a href={url} target={target}>
     <div class="hero-content flex-col md:flex-row">
-      {
-        img && (
-          <Image
-            src={img}
-            width={750}
-            height={422}
-            format="webp"
-            alt={title}
-            class="max-w-full md:max-w-[13rem] rounded-lg"
-          />
-        )
-      }
+      {img && (
+        <Image
+          src={img}
+          width={750}
+          height={422}
+          format="webp"
+          alt={title}
+          class="max-w-full md:max-w-[13rem] rounded-lg"
+        />
+      )}
+
       <div class="grow w-full">
         <h1 class="text-xl font-bold">
           {title}
-          {badge && <div class="badge badge-secondary mx-2">{badge}</div>}
+          {badge && (
+            <div class="badge badge-secondary mx-2">{badge}</div>
+          )}
         </h1>
 
         {/* Authors */}
-        {
-          authors && authors.length > 0 && (
-            <p class="text-sm italic text-gray-500">
-              {authors.join(', ')}
-            </p>
-          )
-        }
+        {authors && authors.length > 0 && (
+          <p class="text-sm italic text-gray-500">
+            {authors.join(', ')}
+          </p>
+        )}
 
         {/* Publication Info */}
-        {
-          publicationInfo && (
-            <p class="text-sm text-gray-600">
-              {publicationInfo}
-            </p>
-          )
-        }
+        {publicationInfo && (
+          <p class="text-sm text-gray-600">
+            {publicationInfo}
+          </p>
+        )}
 
+        {/* Description */}
         <p class="py-1 text-1xl">{desc}</p>
 
+        {/* Tags and extra buttons */}
         <div class="card-actions justify-end">
-          {
-            tags &&
-              tags.map((tag) => (
-                <a
-                  href={`${tag_url}/${tag}`}
-                  class="badge badge-outline"
-                  key={tag}
-                >
-                  {tag}
-                </a>
-              ))
-          }
-          {/* Extra Buttons */}
-          {
-            bibUrl && (
+          {tags &&
+            tags.map((tag) => (
               <a
-                href={bibUrl}
-                target="_blank"
-                class="badge badge-info"
+                href={`${tag_url}/${tag}`}
+                class="badge badge-outline"
+                key={tag}
               >
-                BIB
+                {tag}
               </a>
-            )
+            ))
           }
-          {
-            arxivUrl && (
-              <a
-                href={arxivUrl}
-                target="_blank"
-                class="badge badge-accent"
-              >
-                ArXiv
-              </a>
-            )
-          }
-          {
-            projectUrl && (
-              <a
-                href={projectUrl}
-                target="_blank"
-                class="badge badge-success"
-              >
-                Project
-              </a>
-            )
-          }
+
+          {/* BIB / ArXiv / Project links (if any) */}
+          {bibUrl && (
+            <a
+              href={bibUrl}
+              target="_blank"
+              class="badge badge-info"
+            >
+              BIB
+            </a>
+          )}
+          {arxivUrl && (
+            <a
+              href={arxivUrl}
+              target="_blank"
+              class="badge badge-accent"
+            >
+              ArXiv
+            </a>
+          )}
+          {projectUrl && (
+            <a
+              href={projectUrl}
+              target="_blank"
+              class="badge badge-success"
+            >
+              Project
+            </a>
+          )}
         </div>
       </div>
     </div>
   </a>
+
+  {/* If bibCitation is provided, show a DaisyUI modal trigger */}
+  {bibCitation && (
+    <>
+      {/* Button to open the modal */}
+      <label
+        for={`${title}-bib-modal`}
+        class="btn btn-sm btn-primary mt-2 ml-2 cursor-pointer"
+      >
+        Show Citation
+      </label>
+
+      {/* The hidden checkbox toggles the modal */}
+      <input
+        type="checkbox"
+        id={`${title}-bib-modal`}
+        class="modal-toggle"
+      />
+
+      {/* The modal itself */}
+      <div class="modal">
+        <div class="modal-box bg-base-100">
+          <h3 class="font-bold text-lg">BibTeX</h3>
+          <pre class="bg-base-200 p-2 rounded text-sm whitespace-pre-wrap">
+{bibCitation}
+          </pre>
+          <div class="modal-action">
+            <label for={`${title}-bib-modal`} class="btn">
+              Close
+            </label>
+          </div>
+        </div>
+      </div>
+    </>
+  )}
 </div>
