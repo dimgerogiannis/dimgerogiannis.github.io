@@ -7,6 +7,7 @@ const {
   badge,
   tags,
   target = "_blank",
+  // Expect authors as an array of objects: [{ name: 'Author Name', homepage: 'https://example.com' }, ...]
   authors = [],
   publicationInfo,
   bibCitation, // BibTeX text for modal (if provided)
@@ -45,9 +46,22 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
         )}
       </h1>
 
+      {/* Render each author as a clickable link.
+          The first author is bold, and a comma is added between names. */}
       {authors && authors.length > 0 && (
         <p class="text-sm italic text-gray-500">
-          {authors.join(', ')}
+          {authors.map((author, index) => (
+            <span key={author.name}>
+              <a
+                href={author.homepage}
+                target="_blank"
+                class={`${index === 0 ? "font-bold" : ""} hover:underline`}
+              >
+                {author.name}
+              </a>
+              {index < authors.length - 1 && ", "}
+            </span>
+          ))}
         </p>
       )}
 
@@ -71,7 +85,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           </a>
         ))}
 
-        {/* Use BIB badge as modal trigger if bibCitation is provided */}
+        {/* BIB button: if bibCitation is provided, the badge opens a modal; otherwise, it links to bibUrl */}
         {bibCitation ? (
           <label for={`${title}-bib-modal`} class="badge badge-secondary font-bold cursor-pointer">
             BIB
