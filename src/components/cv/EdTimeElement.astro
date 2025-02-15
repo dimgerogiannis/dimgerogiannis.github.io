@@ -1,10 +1,10 @@
 ---
 const {
-  date,             // e.g. "2022 to 2026"
-  educationTitle,   // e.g. "PhD in Computing"
-  university,       // e.g. "Imperial College London, London, United Kingdom"
-  supervisor,       // e.g. "Professor Stefanos Zafeiriou"
-  supervisorUrl     // e.g. "https://imperial.ac.uk/..."
+  date,
+  educationTitle,
+  university,
+  supervisor,
+  supervisorUrl
 } = Astro.props;
 ---
 
@@ -17,22 +17,22 @@ const {
 
   <!-- Timeline Data -->
   <div class="education__data bd-grid px-5">
-    <!-- 1) Education Title -->
+    <!-- Education Title -->
     <h3 class="font-semibold text-xl">{educationTitle}</h3>
 
-    <!-- 2) Date on a new line, same style as Title -->
+    <!-- Date on a new line, same style as Title -->
     <h3 class="font-semibold text-xl mt-1">{date}</h3>
 
-    <!-- 3) University in smaller font -->
+    <!-- University in smaller font -->
     <p class="text-sm mt-1">{university}</p>
 
-    <!-- 4) Supervisor in smaller font -->
+    <!-- Supervisor in smaller font -->
     <p class="text-sm mt-1">
-      Supervisor: 
+      Supervisor:
       <a 
         href={supervisorUrl} 
         target="_blank" 
-        class="text-primary hover:underline"
+        class="text-primary hover:underline ml-1"
       >
         {supervisor}
       </a>
