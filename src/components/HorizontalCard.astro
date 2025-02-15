@@ -47,7 +47,8 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 
       {/* Render each author as a clickable link.
           The first author inherits the title's color and is bold,
-          while the remaining authors use a lighter color for contrast. */}
+          while the remaining authors use a lighter gray.
+          Commas between names are also styled in the lighter gray. */}
       {authors && authors.length > 0 && (
         <p class="text-sm italic">
           {authors.map((author, index) => (
@@ -55,18 +56,21 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
               <a
                 href={author.homepage}
                 target="_blank"
-                class={`${index === 0 ? "font-bold hover:underline" : "text-gray-500 hover:underline"}`}
+                class={`${index === 0 ? "font-bold" : "text-gray-500"} hover:underline`}
               >
                 {author.name}
               </a>
-              {index < authors.length - 1 && ", "}
+              {index < authors.length - 1 && (
+                <span class="text-gray-500">, </span>
+              )}
             </span>
           ))}
         </p>
       )}
 
+      {/* Publication info rendered in the same color as the title/first author */}
       {publicationInfo && (
-        <p class="text-sm text-gray-600">{publicationInfo}</p>
+        <p class="text-sm text-gray-900">{publicationInfo}</p>
       )}
 
       {desc && (
@@ -85,7 +89,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           </a>
         ))}
 
-        {/* BIB button: if bibCitation is provided, open a modal; otherwise, link to bibUrl */}
+        {/* BIB button: if bibCitation is provided, opens a modal; otherwise, links to bibUrl */}
         {bibCitation ? (
           <label for={`${title}-bib-modal`} class="badge badge-secondary font-bold cursor-pointer">
             BIB
