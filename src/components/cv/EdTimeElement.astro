@@ -1,6 +1,5 @@
 ---
-// EdTimeElement.astro
-const { 
+const {
   date,             // e.g. "2022 to 2026"
   educationTitle,   // e.g. "PhD in Computing"
   university,       // e.g. "Imperial College London, London, United Kingdom"
@@ -15,16 +14,20 @@ const {
     <span class="w-4 h-4 bg-primary block rounded-full mt-1"></span>
     <span class="education__line bg-primary block h-full w-[2px] translate-x-[7px]"></span>
   </div>
+
   <!-- Timeline Data -->
   <div class="education__data bd-grid px-5">
-    <!-- Date in larger, bold letters -->
-    <h3 class="font-semibold text-xl mb-1">{date}</h3>
-    <!-- Education title -->
-    <span class="block text-sm font-semibold">{educationTitle}</span>
-    <!-- University name -->
-    <span class="block text-sm">{university}</span>
-    <!-- Supervisor name with URL -->
-    <span class="block text-sm">
+    <!-- 1) Education Title -->
+    <h3 class="font-semibold text-xl">{educationTitle}</h3>
+
+    <!-- 2) Date on a new line, same style as Title -->
+    <h3 class="font-semibold text-xl mt-1">{date}</h3>
+
+    <!-- 3) University in smaller font -->
+    <p class="text-sm mt-1">{university}</p>
+
+    <!-- 4) Supervisor in smaller font -->
+    <p class="text-sm mt-1">
       Supervisor: 
       <a 
         href={supervisorUrl} 
@@ -33,6 +36,6 @@ const {
       >
         {supervisor}
       </a>
-    </span>
+    </p>
   </div>
 </div>
