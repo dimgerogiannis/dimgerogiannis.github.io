@@ -7,7 +7,7 @@ const {
   badge,
   tags,
   target = "_blank",
-  // Expect authors as an array of objects: [{ name: 'Author Name', homepage: 'https://example.com' }, ...]
+  // Expect authors as an array of objects: { name: 'Author Name', homepage: 'https://...' }
   authors = [],
   publicationInfo,
   bibCitation, // BibTeX text for modal (if provided)
@@ -17,7 +17,6 @@ const {
 } = Astro.props;
 
 import { Image } from "astro:assets";
-
 const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 ---
 
@@ -47,9 +46,10 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
       </h1>
 
       {/* Render each author as a clickable link.
-          The first author is bold, and a comma is added between names. */}
+          The first author is bold, others are normal weight.
+          All author names are rendered in white for better visibility. */}
       {authors && authors.length > 0 && (
-        <p class="text-sm italic text-gray-500">
+        <p class="text-sm italic text-white">
           {authors.map((author, index) => (
             <span key={author.name}>
               <a
@@ -66,11 +66,11 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
       )}
 
       {publicationInfo && (
-        <p class="text-sm text-gray-600">{publicationInfo}</p>
+        <p class="text-sm text-white">{publicationInfo}</p>
       )}
 
       {desc && (
-        <p class="mt-2 text-base">{desc}</p>
+        <p class="mt-2 text-base text-white">{desc}</p>
       )}
 
       {/* Button container */}
@@ -85,7 +85,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           </a>
         ))}
 
-        {/* BIB button: if bibCitation is provided, the badge opens a modal; otherwise, it links to bibUrl */}
+        {/* BIB button: if bibCitation is provided, the badge opens a modal; otherwise, link to bibUrl */}
         {bibCitation ? (
           <label for={`${title}-bib-modal`} class="badge badge-secondary font-bold cursor-pointer">
             BIB
