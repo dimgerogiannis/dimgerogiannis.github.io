@@ -9,25 +9,25 @@ const {
   target = "_blank",
   authors = [],
   publicationInfo,
-  arxivUrl,
-  projectUrl,
-  // We'll still accept a bibUrl if you want a direct link, but...
+  // We no longer auto-link "BIB" to an external file
+  // Instead, "BIB" triggers a modal with bibCitation text:
+  bibCitation,
+  // Optional links if you still want them:
   bibUrl,
-  // ...bibCitation is the text to show in the modal
-  bibCitation
+  arxivUrl,
+  projectUrl
 } = Astro.props;
 
 import { Image } from "astro:assets";
 const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 ---
 
-<div
-  class="rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%]"
->
-  {/* Entire card clickable */}
-  <a href={url} target={target}>
-    <div class="hero-content flex-col md:flex-row">
-      {img && (
+<div class="rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%]">
+  {/* We do NOT wrap the entire card in an anchor.
+      Instead, only the image or the title is clickable to the external link. */}
+  <div class="hero-content flex-col md:flex-row">
+    {img && (
+      <a href={url} target={target} class="block">
         <Image
           src={img}
           width={750}
@@ -36,107 +36,105 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           alt={title}
           class="max-w-full md:max-w-[13rem] rounded-lg"
         />
-      )}
-      <div class="grow w-full">
-        <h1 class="text-xl font-bold">
+      </a>
+    )}
+
+    <div class="grow w-full">
+      {/* Title (clickable to URL) */}
+      <h1 class="text-xl font-bold">
+        <a href={url} target={target} class="hover:underline">
           {title}
-          {badge && <div class="badge badge-secondary mx-2">{badge}</div>}
-        </h1>
+        </a>
+        {badge && <div class="badge badge-secondary mx-2">{badge}</div>}
+      </h1>
 
-        {/* Authors */}
-        {authors && authors.length > 0 && (
-          <p class="text-sm italic text-gray-500">
-            {authors.join(', ')}
-          </p>
+      {/* Authors */}
+      {authors && authors.length > 0 && (
+        <p class="text-sm italic text-gray-500">
+          {authors.join(', ')}
+        </p>
+      )}
+
+      {/* Publication Info */}
+      {publicationInfo && (
+        <p class="text-sm text-gray-600">
+          {publicationInfo}
+        </p>
+      )}
+
+      {/* Description */}
+      {desc && <p class="py-1 text-1xl">{desc}</p>}
+
+      <div class="card-actions justify-end">
+        {/* Tags */}
+        {tags && tags.map((tag) => (
+          <a
+            href={`${tag_url}/${tag}`}
+            class="badge badge-outline"
+            key={tag}
+          >
+            {tag}
+          </a>
+        ))}
+
+        {/* If you still want a direct .bib file link, show it if no modal text */}
+        {bibUrl && !bibCitation && (
+          <a href={bibUrl} target="_blank" class="badge badge-info">
+            BIB
+          </a>
         )}
 
-        {/* Publication Info */}
-        {publicationInfo && (
-          <p class="text-sm text-gray-600">
-            {publicationInfo}
-          </p>
-        )}
-
-        <p class="py-1 text-1xl">{desc}</p>
-
-        <div class="card-actions justify-end">
-          {/* Tags */}
-          {tags && tags.map((tag) => (
-            <a
-              href={`${tag_url}/${tag}`}
-              class="badge badge-outline"
-              key={tag}
+        {/* If we have bibCitation, "BIB" opens the modal */}
+        {bibCitation && (
+          <>
+            <label
+              for={`${title}-bib-modal`}
+              class="badge badge-info cursor-pointer"
             >
-              {tag}
-            </a>
-          ))}
-
-          {/* Replace BIB link with a modal trigger if bibCitation is provided */}
-          {bibCitation ? (
-            /* This label toggles the modal (non-dismissable by outside click) */
-            <label for={`${title}-bib-modal`} class="badge badge-info">
               BIB
             </label>
-          ) : (
-            /* Fallback: if you prefer a direct link when there's no bibCitation */
-            bibUrl && (
-              <a
-                href={bibUrl}
-                target="_blank"
-                class="badge badge-info"
-              >
-                BIB
-              </a>
-            )
-          )}
+            <input
+              type="checkbox"
+              id={`${title}-bib-modal`}
+              class="modal-toggle"
+            />
+            {/* The modal: does NOT close on outside click */}
+            <div class="modal">
+              <div class="modal-box bg-base-100">
+                <h3 class="font-bold text-lg">BibTeX</h3>
+                <pre class="bg-base-200 p-2 rounded text-sm whitespace-pre-wrap">
+{bibCitation}
+                </pre>
+                <div class="modal-action">
+                  <label for={`${title}-bib-modal`} class="btn">
+                    Close
+                  </label>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
 
-          {arxivUrl && (
-            <a
-              href={arxivUrl}
-              target="_blank"
-              class="badge badge-accent"
-            >
-              ArXiv
-            </a>
-          )}
-          {projectUrl && (
-            <a
-              href={projectUrl}
-              target="_blank"
-              class="badge badge-success"
-            >
-              Project
-            </a>
-          )}
-        </div>
+        {/* Other links if you want them */}
+        {arxivUrl && (
+          <a
+            href={arxivUrl}
+            target="_blank"
+            class="badge badge-accent"
+          >
+            ArXiv
+          </a>
+        )}
+        {projectUrl && (
+          <a
+            href={projectUrl}
+            target="_blank"
+            class="badge badge-success"
+          >
+            Project
+          </a>
+        )}
       </div>
     </div>
-  </a>
-
-  {/* If we have bibCitation, show the modal markup */}
-  {bibCitation && (
-    <>
-      {/* Hidden checkbox that toggles the modal */}
-      <input
-        type="checkbox"
-        id={`${title}-bib-modal`}
-        class="modal-toggle"
-      />
-
-      {/* Modal that does NOT close on outside click */}
-      <div class="modal">
-        <div class="modal-box bg-base-100">
-          <h3 class="font-bold text-lg">BibTeX</h3>
-          <pre class="bg-base-200 p-2 rounded text-sm whitespace-pre-wrap">
-{bibCitation}
-          </pre>
-          <div class="modal-action">
-            <label for={`${title}-bib-modal`} class="btn">
-              Close
-            </label>
-          </div>
-        </div>
-      </div>
-    </>
-  )}
+  </div>
 </div>
