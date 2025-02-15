@@ -15,13 +15,3 @@
     <div class="navbar-end"></div>
   </div>
 </div>
-
-<script>
-  function toggleTheme() {
-    const html = document.documentElement;
-    const isDark = html.getAttribute("data-theme") === "dark";
-    html.setAttribute("data-theme", isDark ? "light" : "dark");
-  }
-</script>
-
-<button onclick="toggleTheme()">Toggle Dark Mode</button>
