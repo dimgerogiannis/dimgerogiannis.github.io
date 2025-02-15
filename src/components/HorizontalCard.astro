@@ -71,9 +71,9 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           </a>
         ))}
 
-        {/* Use BIB badge as modal trigger if bibCitation is provided */}
+        {/* BIB badge as modal trigger if bibCitation is provided */}
         {bibCitation ? (
-          <label for={`${title}-bib-modal`} class="badge badge-info cursor-pointer">
+          <label for={`${title}-bib-modal`} class="badge badge-secondary cursor-pointer">
             BIB
           </label>
         ) : (
@@ -81,7 +81,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
             <a
               href={bibUrl}
               target="_blank"
-              class="badge badge-info"
+              class="badge badge-secondary"
             >
               BIB
             </a>
@@ -92,7 +92,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           <a
             href={arxivUrl}
             target="_blank"
-            class="badge badge-accent"
+            class="badge badge-secondary"
           >
             ArXiv
           </a>
@@ -101,7 +101,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           <a
             href={projectUrl}
             target="_blank"
-            class="badge badge-success"
+            class="badge badge-secondary"
           >
             Project
           </a>
@@ -122,7 +122,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 {bibCitation}
         </pre>
         <div class="modal-action">
-          <label for={`${title}-bib-modal`} class="badge badge-outline cursor-pointer">
+          <label for={`${title}-bib-modal`} class="badge badge-secondary cursor-pointer">
             Close
           </label>
         </div>
