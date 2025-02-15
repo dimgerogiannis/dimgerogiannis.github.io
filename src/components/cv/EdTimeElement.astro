@@ -5,8 +5,10 @@ const {
   university,
   studyCenterUrl,
   additionalInfo = [],  // optional extra info lines as an array of strings
-  supervisor,
-  supervisorUrl
+  supervisor,           // optional supervisor name
+  supervisorUrl,        // optional supervisor URL
+  advisor,              // optional advisor name
+  advisorUrl            // optional advisor URL
 } = Astro.props;
 ---
 
@@ -37,20 +39,22 @@ const {
     </p>
 
     <!-- Additional optional info lines -->
-    {additionalInfo && additionalInfo.length > 0 && additionalInfo.map((info) => (
-      <p class="text-sm mt-1">{info}</p>
+    {additionalInfo && additionalInfo.length > 0 && additionalInfo.map((info, i) => (
+      <p key={i} class="text-sm mt-1">{info}</p>
     ))}
 
-    <!-- Supervisor -->
-    <p class="text-sm mt-1">
-      Supervisor:
-      <a 
-        href={supervisorUrl} 
-        target="_blank" 
-        class="text-primary hover:underline ml-1"
-      >
-        {supervisor}
-      </a>
-    </p>
+    <!-- Mentor: Either Supervisor or Advisor -->
+    {(supervisor || advisor) && (
+      <p class="text-sm mt-1">
+        {supervisor ? "Supervisor:" : "Advisor:"}
+        <a 
+          href={supervisor ? supervisorUrl : advisorUrl} 
+          target="_blank" 
+          class="text-primary hover:underline ml-1"
+        >
+          {supervisor || advisor}
+        </a>
+      </p>
+    )}
   </div>
 </div>
