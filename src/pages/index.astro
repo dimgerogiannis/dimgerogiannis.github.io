@@ -9,7 +9,7 @@ const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueO
 const last_posts = posts.slice(0, 3);
 ---
 
-<BaseLayout sideBarActiveItemID="home">
+<BaseLayout sideBarActiveItemID="home" image="/Arc2Avatar.jpeg">
   <div class="pb-12 mt-5">
     <div class="text-5xl font-bold">Dimitrios Gerogiannis</div>
     <div class="text-3xl py-3 font-bold">PhD Candidate, Imperial College London</div>
