@@ -9,23 +9,22 @@ const {
   target = "_blank",
   authors = [],
   publicationInfo,
-  bibUrl,
   arxivUrl,
   projectUrl,
-  // New prop for the modal text:
+  // We'll still accept a bibUrl if you want a direct link, but...
+  bibUrl,
+  // ...bibCitation is the text to show in the modal
   bibCitation
 } = Astro.props;
 
 import { Image } from "astro:assets";
-
-// For tag URLs:
 const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 ---
 
 <div
   class="rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%]"
 >
-  {/* Entire card is clickable */}
+  {/* Entire card clickable */}
   <a href={url} target={target}>
     <div class="hero-content flex-col md:flex-row">
       {img && (
@@ -38,13 +37,10 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           class="max-w-full md:max-w-[13rem] rounded-lg"
         />
       )}
-
       <div class="grow w-full">
         <h1 class="text-xl font-bold">
           {title}
-          {badge && (
-            <div class="badge badge-secondary mx-2">{badge}</div>
-          )}
+          {badge && <div class="badge badge-secondary mx-2">{badge}</div>}
         </h1>
 
         {/* Authors */}
@@ -61,33 +57,39 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           </p>
         )}
 
-        {/* Description */}
         <p class="py-1 text-1xl">{desc}</p>
 
-        {/* Tags and extra buttons */}
         <div class="card-actions justify-end">
-          {tags &&
-            tags.map((tag) => (
-              <a
-                href={`${tag_url}/${tag}`}
-                class="badge badge-outline"
-                key={tag}
-              >
-                {tag}
-              </a>
-            ))
-          }
-
-          {/* BIB / ArXiv / Project links (if any) */}
-          {bibUrl && (
+          {/* Tags */}
+          {tags && tags.map((tag) => (
             <a
-              href={bibUrl}
-              target="_blank"
-              class="badge badge-info"
+              href={`${tag_url}/${tag}`}
+              class="badge badge-outline"
+              key={tag}
             >
-              BIB
+              {tag}
             </a>
+          ))}
+
+          {/* Replace BIB link with a modal trigger if bibCitation is provided */}
+          {bibCitation ? (
+            /* This label toggles the modal (non-dismissable by outside click) */
+            <label for={`${title}-bib-modal`} class="badge badge-info">
+              BIB
+            </label>
+          ) : (
+            /* Fallback: if you prefer a direct link when there's no bibCitation */
+            bibUrl && (
+              <a
+                href={bibUrl}
+                target="_blank"
+                class="badge badge-info"
+              >
+                BIB
+              </a>
+            )
           )}
+
           {arxivUrl && (
             <a
               href={arxivUrl}
@@ -111,25 +113,17 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
     </div>
   </a>
 
-  {/* If bibCitation is provided, show a DaisyUI modal trigger */}
+  {/* If we have bibCitation, show the modal markup */}
   {bibCitation && (
     <>
-      {/* Button to open the modal */}
-      <label
-        for={`${title}-bib-modal`}
-        class="btn btn-sm btn-primary mt-2 ml-2 cursor-pointer"
-      >
-        Show Citation
-      </label>
-
-      {/* The hidden checkbox toggles the modal */}
+      {/* Hidden checkbox that toggles the modal */}
       <input
         type="checkbox"
         id={`${title}-bib-modal`}
         class="modal-toggle"
       />
 
-      {/* The modal itself */}
+      {/* Modal that does NOT close on outside click */}
       <div class="modal">
         <div class="modal-box bg-base-100">
           <h3 class="font-bold text-lg">BibTeX</h3>
