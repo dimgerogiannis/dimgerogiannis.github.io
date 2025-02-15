@@ -71,37 +71,36 @@ const last_posts = posts.slice(0, 3);
     <div class="text-3xl w-full font-bold mb-2">Selected Publications</div>
   </div>
 
+
+  // Some data array, for example
   const authorsList = [
-    { name: "Foivos Paraperas Papantoniou", url: "#" },
-    { name: "Alexandros Lattas", url: "#" },
-    { name: "Stylianos Moschoglou", url: "#" },
-    { name: "Jiankang Deng", url: "#" }
+    "F. Papantoniou",
+    "A. Lattas",
+    "S. Moschoglou",
+    "J. Deng",
+    "S. Zafeiriou"
   ];
   ---
   
-  <!-- WRONG: 
-       authors=[ ... ] will cause syntax errors in Astro/JSX
-  -->
+  <!-- Maybe a divider or heading -->
+  <div class="divider my-4"></div>
   
-  <!-- CORRECT: 
-       Put curly braces around arrays or objects in a prop 
-  -->
-  <div class="divider my-0"></div>
+  <!-- Use your new fancy card -->
   <HorizontalCard
     title="Arc2Face: A Foundation Model for ID-Consistent Human Faces"
     img="/post_img.webp"
-    desc="(Optional) Some description..."
     url="https://arc2face.github.io/"
     badge="NEW"
     target="_blank"
-  
-    authors={["F. Papantoniou", "A. Lattas", "S. Moschoglou", "J. Deng", "S. Zafeiriou"]}
+    
+    authors={authorsList}
     publicationInfo="In Proceedings of the European Conference on Computer Vision (ECCV), 2024 (Oral Presentation)"
-  
+    
     bibUrl="https://example.com/arc2face.bib"
     arxivUrl="https://arxiv.org/abs/XXXX.XXXXX"
     projectUrl="https://arc2face.github.io"
-  
+    
+    desc="(Optional) Some description..."
     tags={["3D", "Avatar", "ECCV"]}
   />
 
