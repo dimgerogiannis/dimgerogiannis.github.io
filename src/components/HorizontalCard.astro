@@ -118,7 +118,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
     <div class="modal fixed inset-0 z-50">
       <div class="modal-box bg-base-100">
         <h3 class="font-bold text-lg">BibTeX</h3>
-        <pre class="bg-base-200 p-2 rounded text-sm whitespace-pre-wrap">
+        <pre class="bg-base-200 p-2 rounded text-sm whitespace-nowrap overflow-x-auto">
 {bibCitation}
         </pre>
         <div class="modal-action">
@@ -130,3 +130,4 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
     </div>
   </>
 )}
+
