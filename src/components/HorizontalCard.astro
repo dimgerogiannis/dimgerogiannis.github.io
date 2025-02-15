@@ -9,23 +9,20 @@ const {
   target = "_blank",
   authors = [],
   publicationInfo,
-  // We no longer auto-link "BIB" to an external file
-  // Instead, "BIB" triggers a modal with bibCitation text:
-  bibCitation,
-  // Optional links if you still want them:
-  bibUrl,
+  bibCitation, // The BibTeX text we show in the modal
+  bibUrl,      // If you still want a direct link fallback
   arxivUrl,
   projectUrl
 } = Astro.props;
 
 import { Image } from "astro:assets";
+
 const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 ---
 
-<div class="rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%]">
-  {/* We do NOT wrap the entire card in an anchor.
-      Instead, only the image or the title is clickable to the external link. */}
-  <div class="hero-content flex-col md:flex-row">
+<div class="rounded-lg bg-base-100 shadow-xl p-4">
+  <div class="flex flex-col md:flex-row items-start gap-4">
+    {/* Make the image itself clickable (not the entire card) */}
     {img && (
       <a href={url} target={target} class="block">
         <Image
@@ -34,18 +31,21 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           height={422}
           format="webp"
           alt={title}
-          class="max-w-full md:max-w-[13rem] rounded-lg"
+          class="rounded-lg max-w-full md:max-w-[13rem]"
         />
       </a>
     )}
 
-    <div class="grow w-full">
-      {/* Title (clickable to URL) */}
+    {/* Right side */}
+    <div class="grow">
+      {/* Title, also clickable */}
       <h1 class="text-xl font-bold">
         <a href={url} target={target} class="hover:underline">
           {title}
         </a>
-        {badge && <div class="badge badge-secondary mx-2">{badge}</div>}
+        {badge && (
+          <span class="badge badge-secondary ml-2">{badge}</span>
+        )}
       </h1>
 
       {/* Authors */}
@@ -57,15 +57,16 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 
       {/* Publication Info */}
       {publicationInfo && (
-        <p class="text-sm text-gray-600">
-          {publicationInfo}
-        </p>
+        <p class="text-sm text-gray-600">{publicationInfo}</p>
       )}
 
       {/* Description */}
-      {desc && <p class="py-1 text-1xl">{desc}</p>}
+      {desc && (
+        <p class="mt-2 text-base">{desc}</p>
+      )}
 
-      <div class="card-actions justify-end">
+      {/* Tags & Buttons */}
+      <div class="flex flex-wrap items-center gap-2 mt-2">
         {/* Tags */}
         {tags && tags.map((tag) => (
           <a
@@ -77,14 +78,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           </a>
         ))}
 
-        {/* If you still want a direct .bib file link, show it if no modal text */}
-        {bibUrl && !bibCitation && (
-          <a href={bibUrl} target="_blank" class="badge badge-info">
-            BIB
-          </a>
-        )}
-
-        {/* If we have bibCitation, "BIB" opens the modal */}
+        {/* If we have bibCitation, clicking BIB shows a modal */}
         {bibCitation && (
           <>
             <label
@@ -98,9 +92,8 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
               id={`${title}-bib-modal`}
               class="modal-toggle"
             />
-            {/* The modal: does NOT close on outside click */}
-            <div class="modal">
-              <div class="modal-box bg-base-100">
+            <div class="modal pointer-events-none">
+              <div class="modal-box pointer-events-auto bg-base-100">
                 <h3 class="font-bold text-lg">BibTeX</h3>
                 <pre class="bg-base-200 p-2 rounded text-sm whitespace-pre-wrap">
 {bibCitation}
@@ -115,7 +108,18 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           </>
         )}
 
-        {/* Other links if you want them */}
+        {/* If no bibCitation but you still want a direct link */}
+        {(!bibCitation && bibUrl) && (
+          <a
+            href={bibUrl}
+            target="_blank"
+            class="badge badge-info"
+          >
+            BIB
+          </a>
+        )}
+
+        {/* ArXiv / Project */}
         {arxivUrl && (
           <a
             href={arxivUrl}
