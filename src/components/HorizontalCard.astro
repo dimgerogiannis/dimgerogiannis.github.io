@@ -1,112 +1,41 @@
 ---
-const {
-  title,
-  img,
-  desc,
-  url,
-  badge,
-  tags,
-  target = "_blank",
-  authors = [],
-  publicationInfo,
-  bibUrl,
-  arxivUrl,
-  projectUrl
-} = Astro.props;
+const { title, img, desc, url, badge, tags, target = "_blank" } = Astro.props;
 import { Image } from "astro:assets";
-
-// Build a tag URL if you want to follow a "tag" URL scheme.
 const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 ---
 
-<div class="rounded-lg bg-base-100 shadow-lg p-6 transition-transform duration-300 hover:scale-105">
-  <a href={url} target={target} class="block">
-    <div class="flex flex-col md:flex-row gap-6">
-      {img && (
-        <div class="flex-shrink-0">
+<div
+  class="rounded-lg bg-base-100 hover:shadow-xl transition ease-in-out hover:scale-[102%]"
+>
+  <a href={url} target={target}>
+    <div class="hero-content flex-col md:flex-row">
+      {
+        img && (
           <Image
             src={img}
             width={750}
             height={422}
             format="webp"
             alt={title}
-            class="rounded-lg w-full md:w-64 object-cover"
+            class="max-w-full md:max-w-[13rem] rounded-lg"
           />
-        </div>
-      )}
-      <div class="flex flex-col justify-between w-full">
-        <div>
-          {/* Title & Badge */}
-          <h1 class="text-2xl font-bold text-primary flex items-center">
-            {title}
-            {badge && <span class="badge badge-secondary ml-3">{badge}</span>}
-          </h1>
-
-          {/* Authors */}
-          {authors && authors.length > 0 && (
-            <p class="mt-2 text-sm italic text-gray-600">
-              {authors.join(', ')}
-            </p>
-          )}
-
-          {/* Publication Info */}
-          {publicationInfo && (
-            <p class="mt-1 text-sm text-gray-500">{publicationInfo}</p>
-          )}
-
-          {/* Description */}
-          {desc && (
-            <p class="mt-4 text-base text-gray-700">{desc}</p>
-          )}
-        </div>
-
-        {/* Footer: Tags & Action Buttons */}
-        <div class="mt-4 flex flex-col md:flex-row items-start md:items-center justify-between">
-          {/* Tags */}
-          {tags && (
-            <div class="flex flex-wrap gap-2">
-              {tags.map((tag) => (
-                <a
-                  href={`${tag_url}/${tag}`}
-                  key={tag}
-                  class="badge badge-outline"
-                >
+        )
+      }
+      <div class="grow w-full">
+        <h1 class="text-xl font-bold">
+          {title}
+          {badge && <div class="badge badge-secondary mx-2">{badge}</div>}
+        </h1>
+        <p class="py-1 text-1xl">{desc}</p>
+        <div class="card-actions justify-end">
+          {
+            tags &&
+              tags.map((tag) => (
+                <a href={${tag_url}/${tag}} class="badge badge-outline">
                   {tag}
                 </a>
-              ))}
-            </div>
-          )}
-
-          {/* Action Buttons */}
-          <div class="flex gap-2 mt-2 md:mt-0">
-            {bibUrl && (
-              <a
-                href={bibUrl}
-                target="_blank"
-                class="btn btn-sm btn-info"
-              >
-                BIB
-              </a>
-            )}
-            {arxivUrl && (
-              <a
-                href={arxivUrl}
-                target="_blank"
-                class="btn btn-sm btn-accent"
-              >
-                ArXiv
-              </a>
-            )}
-            {projectUrl && (
-              <a
-                href={projectUrl}
-                target="_blank"
-                class="btn btn-sm btn-success"
-              >
-                Project
-              </a>
-            )}
-          </div>
+              ))
+          }
         </div>
       </div>
     </div>
