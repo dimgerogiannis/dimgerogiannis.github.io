@@ -41,7 +41,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           {title}
         </a>
         {badge && (
-          <span class="badge badge-secondary ml-2">{badge}</span>
+          <span class="badge badge-secondary ml-2 font-bold">{badge}</span>
         )}
       </h1>
 
@@ -64,7 +64,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
         {tags && tags.map((tag) => (
           <a
             href={`${tag_url}/${tag}`}
-            class="badge badge-outline"
+            class="badge badge-outline font-bold"
             key={tag}
           >
             {tag}
@@ -73,7 +73,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 
         {/* BIB badge as modal trigger if bibCitation is provided */}
         {bibCitation ? (
-          <label for={`${title}-bib-modal`} class="badge badge-secondary cursor-pointer">
+          <label for={`${title}-bib-modal`} class="badge badge-secondary font-bold cursor-pointer">
             BIB
           </label>
         ) : (
@@ -81,7 +81,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
             <a
               href={bibUrl}
               target="_blank"
-              class="badge badge-secondary"
+              class="badge badge-secondary font-bold"
             >
               BIB
             </a>
@@ -92,7 +92,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           <a
             href={arxivUrl}
             target="_blank"
-            class="badge badge-secondary"
+            class="badge badge-secondary font-bold"
           >
             ArXiv
           </a>
@@ -101,7 +101,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           <a
             href={projectUrl}
             target="_blank"
-            class="badge badge-secondary"
+            class="badge badge-secondary font-bold"
           >
             Project
           </a>
@@ -122,7 +122,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 {bibCitation}
         </pre>
         <div class="modal-action">
-          <label for={`${title}-bib-modal`} class="badge badge-secondary cursor-pointer">
+          <label for={`${title}-bib-modal`} class="badge badge-secondary font-bold cursor-pointer">
             Close
           </label>
         </div>
