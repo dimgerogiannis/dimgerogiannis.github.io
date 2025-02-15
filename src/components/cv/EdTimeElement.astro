@@ -1,0 +1,38 @@
+---
+// EdTimeElement.astro
+const { 
+  date,             // e.g. "2022 to 2026"
+  educationTitle,   // e.g. "PhD in Computing"
+  university,       // e.g. "Imperial College London, London, United Kingdom"
+  supervisor,       // e.g. "Professor Stefanos Zafeiriou"
+  supervisorUrl     // e.g. "https://imperial.ac.uk/..."
+} = Astro.props;
+---
+
+<div class="flex">
+  <!-- Timeline Icon/Line -->
+  <div class="education__time">
+    <span class="w-4 h-4 bg-primary block rounded-full mt-1"></span>
+    <span class="education__line bg-primary block h-full w-[2px] translate-x-[7px]"></span>
+  </div>
+  <!-- Timeline Data -->
+  <div class="education__data bd-grid px-5">
+    <!-- Date in larger, bold letters -->
+    <h3 class="font-semibold text-xl mb-1">{date}</h3>
+    <!-- Education title -->
+    <span class="block text-sm font-semibold">{educationTitle}</span>
+    <!-- University name -->
+    <span class="block text-sm">{university}</span>
+    <!-- Supervisor name with URL -->
+    <span class="block text-sm">
+      Supervisor: 
+      <a 
+        href={supervisorUrl} 
+        target="_blank" 
+        class="text-primary hover:underline"
+      >
+        {supervisor}
+      </a>
+    </span>
+  </div>
+</div>
