@@ -41,7 +41,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           {title}
         </a>
         {badge && (
-          <span class="badge badge-secondary ml-2 font-bold">{badge}</span>
+          <span class="badge badge-info ml-2 font-bold">{badge}</span>
         )}
       </h1>
 
@@ -71,7 +71,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           </a>
         ))}
 
-        {/* BIB badge as modal trigger if bibCitation is provided */}
+        {/* Use BIB badge as modal trigger if bibCitation is provided */}
         {bibCitation ? (
           <label for={`${title}-bib-modal`} class="badge badge-secondary font-bold cursor-pointer">
             BIB
@@ -80,7 +80,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           bibUrl && (
             <a
               href={bibUrl}
-              target="_blank"
+              target={target}
               class="badge badge-secondary font-bold"
             >
               BIB
@@ -91,19 +91,19 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
         {arxivUrl && (
           <a
             href={arxivUrl}
-            target="_blank"
+            target={target}
             class="badge badge-secondary font-bold"
           >
-            ARXIV
+            ArXiv
           </a>
         )}
         {projectUrl && (
           <a
             href={projectUrl}
-            target="_blank"
+            target={target}
             class="badge badge-secondary font-bold"
           >
-            PROJECT PAGE
+            Project
           </a>
         )}
       </div>
