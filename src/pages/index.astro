@@ -68,16 +68,48 @@ const last_posts = posts.slice(0, 3);
   </div>
 
   <div>
-    <div class="text-3xl w-full font-bold mb-2">Selected Publications{"</>"}</div>
+    <div class="text-3xl w-full font-bold mb-2">Selected Publications</div>
   </div>
 
   <HorizontalCard
-    title="Demo Project 1"
+    title="Arc2Face: A Foundation Model for ID-Consistent Human Faces"
     img="/post_img.webp"
-    desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+    // Instead of a plain string, we pass multi-line HTML as the desc:
+    desc={`
+      <div class="flex flex-wrap gap-2 mb-2">
+        <!-- Fancy buttons -->
+        <a href="https://example.com/bib" target="_blank" class="btn btn-sm btn-outline">BibTeX</a>
+        <a href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank" class="btn btn-sm btn-outline">ArXiv</a>
+        <a href="https://arc2face.github.io" target="_blank" class="btn btn-sm btn-outline">Project Page</a>
+      </div>
+  
+      <!-- Authors -->
+      <p class="mb-1 text-base">
+        <a href="https://example.com/foivos" class="link link-hover text-accent" target="_blank">
+          Foivos Paraperas Papantoniou
+        </a>,
+        <a href="https://example.com/alattas" class="link link-hover text-accent" target="_blank">
+          Alexandros Lattas
+        </a>,
+        <a href="https://example.com/smoschoglou" class="link link-hover text-accent" target="_blank">
+          Stylianos Moschoglou
+        </a>,
+        <a href="https://example.com/jdeng" class="link link-hover text-accent" target="_blank">
+          Jiankang Deng
+        </a>
+        , and 2 more authors
+      </p>
+  
+      <!-- Publication info in italics -->
+      <p class="italic text-sm text-gray-400">
+        In Proceedings of the European Conference on Computer Vision (ECCV), 2024 
+        <span class="text-red-500">(Oral Presentation)</span>
+      </p>
+    `}
     url="#"
     badge="NEW"
   />
+
   <div class="divider my-0"></div>
   <HorizontalCard
     title="Demo Project 2"
