@@ -9,8 +9,8 @@ const {
   target = "_blank",
   authors = [],
   publicationInfo,
-  bibCitation, // The BibTeX text we show in the modal
-  bibUrl,      // If you still want a direct link fallback
+  bibCitation, // BibTeX text for modal (if provided)
+  bibUrl,      // Fallback link if no bibCitation provided
   arxivUrl,
   projectUrl
 } = Astro.props;
@@ -20,9 +20,8 @@ import { Image } from "astro:assets";
 const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 ---
 
-<div class="rounded-lg bg-base-100 shadow-xl p-4">
+<div class="rounded-lg bg-base-100 shadow-xl p-4 relative z-0">
   <div class="flex flex-col md:flex-row items-start gap-4">
-    {/* Make the image itself clickable (not the entire card) */}
     {img && (
       <a href={url} target={target} class="block">
         <Image
@@ -36,9 +35,7 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
       </a>
     )}
 
-    {/* Right side */}
     <div class="grow">
-      {/* Title, also clickable */}
       <h1 class="text-xl font-bold">
         <a href={url} target={target} class="hover:underline">
           {title}
@@ -48,26 +45,22 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
         )}
       </h1>
 
-      {/* Authors */}
       {authors && authors.length > 0 && (
         <p class="text-sm italic text-gray-500">
           {authors.join(', ')}
         </p>
       )}
 
-      {/* Publication Info */}
       {publicationInfo && (
         <p class="text-sm text-gray-600">{publicationInfo}</p>
       )}
 
-      {/* Description */}
       {desc && (
         <p class="mt-2 text-base">{desc}</p>
       )}
 
-      {/* Tags & Buttons */}
-      <div class="flex flex-wrap items-center gap-2 mt-2">
-        {/* Tags */}
+      {/* Button container with increased z-index */}
+      <div class="flex flex-wrap items-center gap-2 mt-2 relative z-10">
         {tags && tags.map((tag) => (
           <a
             href={`${tag_url}/${tag}`}
@@ -78,48 +71,23 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           </a>
         ))}
 
-        {/* If we have bibCitation, clicking BIB shows a modal */}
-        {bibCitation && (
-          <>
-            <label
-              for={`${title}-bib-modal`}
-              class="badge badge-info cursor-pointer"
+        {/* Use BIB badge as modal trigger if bibCitation is provided */}
+        {bibCitation ? (
+          <label for={`${title}-bib-modal`} class="badge badge-info cursor-pointer">
+            BIB
+          </label>
+        ) : (
+          bibUrl && (
+            <a
+              href={bibUrl}
+              target="_blank"
+              class="badge badge-info"
             >
               BIB
-            </label>
-            <input
-              type="checkbox"
-              id={`${title}-bib-modal`}
-              class="modal-toggle"
-            />
-            <div class="modal pointer-events-none">
-              <div class="modal-box pointer-events-auto bg-base-100">
-                <h3 class="font-bold text-lg">BibTeX</h3>
-                <pre class="bg-base-200 p-2 rounded text-sm whitespace-pre-wrap">
-{bibCitation}
-                </pre>
-                <div class="modal-action">
-                  <label for={`${title}-bib-modal`} class="btn">
-                    Close
-                  </label>
-                </div>
-              </div>
-            </div>
-          </>
+            </a>
+          )
         )}
 
-        {/* If no bibCitation but you still want a direct link */}
-        {(!bibCitation && bibUrl) && (
-          <a
-            href={bibUrl}
-            target="_blank"
-            class="badge badge-info"
-          >
-            BIB
-          </a>
-        )}
-
-        {/* ArXiv / Project */}
         {arxivUrl && (
           <a
             href={arxivUrl}
@@ -142,3 +110,23 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
     </div>
   </div>
 </div>
+
+{/* Modal markup placed outside the card */}
+{bibCitation && (
+  <>
+    <input type="checkbox" id={`${title}-bib-modal`} class="modal-toggle" />
+    <div class="modal fixed inset-0 z-50">
+      <div class="modal-box bg-base-100">
+        <h3 class="font-bold text-lg">BibTeX</h3>
+        <pre class="bg-base-200 p-2 rounded text-sm whitespace-pre-wrap">
+{bibCitation}
+        </pre>
+        <div class="modal-action">
+          <label for={`${title}-bib-modal`} class="btn">
+            Close
+          </label>
+        </div>
+      </div>
+    </div>
+  </>
+)}
