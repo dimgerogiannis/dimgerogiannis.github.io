@@ -1,5 +1,18 @@
 ---
-const { title, img, desc, url, badge, tags, target = "_blank" } = Astro.props;
+const {
+  title,
+  img,
+  desc,
+  url,
+  badge,
+  tags,
+  target = "_blank",
+  authors = [],
+  publicationInfo,
+  bibUrl,
+  arxivUrl,
+  projectUrl
+} = Astro.props;
 import { Image } from "astro:assets";
 const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
 ---
@@ -26,15 +39,74 @@ const tag_url = url.split("/").slice(0, -1).join("/") + "/tag";
           {title}
           {badge && <div class="badge badge-secondary mx-2">{badge}</div>}
         </h1>
+
+        {/* Authors */}
+        {
+          authors && authors.length > 0 && (
+            <p class="text-sm italic text-gray-500">
+              {authors.join(', ')}
+            </p>
+          )
+        }
+
+        {/* Publication Info */}
+        {
+          publicationInfo && (
+            <p class="text-sm text-gray-600">
+              {publicationInfo}
+            </p>
+          )
+        }
+
         <p class="py-1 text-1xl">{desc}</p>
+
         <div class="card-actions justify-end">
           {
             tags &&
               tags.map((tag) => (
-                <a href={${tag_url}/${tag}} class="badge badge-outline">
+                <a
+                  href={`${tag_url}/${tag}`}
+                  class="badge badge-outline"
+                  key={tag}
+                >
                   {tag}
                 </a>
               ))
+          }
+
+          {/* Extra Buttons */}
+          {
+            bibUrl && (
+              <a
+                href={bibUrl}
+                target="_blank"
+                class="badge badge-info"
+              >
+                BIB
+              </a>
+            )
+          }
+          {
+            arxivUrl && (
+              <a
+                href={arxivUrl}
+                target="_blank"
+                class="badge badge-accent"
+              >
+                ArXiv
+              </a>
+            )
+          }
+          {
+            projectUrl && (
+              <a
+                href={projectUrl}
+                target="_blank"
+                class="badge badge-success"
+              >
+                Project
+              </a>
+            )
           }
         </div>
       </div>
