@@ -4,31 +4,28 @@ const {
   educationTitle,
   university,
   studyCenterUrl,
-  // Now additionalInfo is an array of objects: { text: "info", url?: "optional url" }
   additionalInfo = [],
   supervisor,
   supervisorUrl,
   advisor,
-  advisorUrl
+  advisorUrl,
+  imageSrc,
+  imageAlt,
+  imageHeightClass = "h-10"
 } = Astro.props;
 ---
 
 <div class="flex">
-  <!-- Timeline Icon/Line -->
   <div class="education__time">
     <span class="w-4 h-4 bg-primary block rounded-full mt-1"></span>
     <span class="education__line bg-primary block h-full w-[2px] translate-x-[7px]"></span>
   </div>
 
-  <!-- Timeline Data -->
   <div class="education__data bd-grid px-5">
-    <!-- Education Title -->
     <h3 class="font-semibold text-xl">{educationTitle}</h3>
 
-    <!-- Date on a new line -->
     <h3 class="font-semibold text-xl mt-1">{date}</h3>
 
-    <!-- University / Study Center -->
     <p class="text-sm mt-1">
       {studyCenterUrl ? (
         <a href={studyCenterUrl} target="_blank" class="text-primary hover:underline">
@@ -39,7 +36,6 @@ const {
       )}
     </p>
 
-    <!-- Additional optional info lines -->
     {additionalInfo && additionalInfo.length > 0 && additionalInfo.map((info, i) => (
       <p key={i} class="text-sm mt-1">
         {info.url ? (
@@ -52,18 +48,28 @@ const {
       </p>
     ))}
 
-    <!-- Supervisor/Advisor: display if either is provided -->
     {(supervisor || advisor) && (
       <p class="text-sm mt-1">
         {supervisor ? "Supervisor:" : "Advisor:"}
-        <a 
-          href={supervisor ? supervisorUrl : advisorUrl} 
-          target="_blank" 
+        <a
+          href={supervisor ? supervisorUrl : advisorUrl}
+          target="_blank"
           class="text-primary hover:underline ml-1"
         >
           {supervisor || advisor}
         </a>
       </p>
+    )}
+
+    {imageSrc && (
+      <div class="mt-3">
+        <img
+          src={imageSrc}
+          alt={imageAlt ?? `${university} logo`}
+          class={`${imageHeightClass} w-auto object-contain`}
+          loading="lazy"
+        />
+      </div>
     )}
   </div>
 </div>
