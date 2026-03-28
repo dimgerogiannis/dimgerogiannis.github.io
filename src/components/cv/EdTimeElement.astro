@@ -11,7 +11,8 @@ const {
   advisorUrl,
   imageSrc,
   imageAlt,
-  imageHeightClass = "h-10"
+  imageBoxClass = "w-64 h-20 p-3 bg-white rounded-sm",
+  imageClass = "max-w-full max-h-full object-contain"
 } = Astro.props;
 ---
 
@@ -37,7 +38,7 @@ const {
     </p>
 
     {additionalInfo && additionalInfo.length > 0 && additionalInfo.map((info, i) => (
-      <p key={i} class="text-sm mt-1">
+      <p class="text-sm mt-1">
         {info.url ? (
           <a href={info.url} target="_blank" class="text-primary hover:underline">
             {info.text}
@@ -63,12 +64,14 @@ const {
 
     {imageSrc && (
       <div class="mt-3">
-        <img
-          src={imageSrc}
-          alt={imageAlt ?? `${university} logo`}
-          class={`${imageHeightClass} w-auto object-contain`}
-          loading="lazy"
-        />
+        <div class={`flex items-center justify-center ${imageBoxClass}`}>
+          <img
+            src={imageSrc}
+            alt={imageAlt ?? `${university} logo`}
+            class={imageClass}
+            loading="lazy"
+          />
+        </div>
       </div>
     )}
   </div>
