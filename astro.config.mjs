@@ -5,5 +5,7 @@ import tailwind from "@astrojs/tailwind";
 
 export default defineConfig({
   site: 'https://dimgerogiannis.github.io',
-  integrations: [mdx(), tailwind()]
+  // Tailwind/daisyUI styles are imported only by BaseLayout (the legacy template
+  // pages), so they don't leak into the custom Home / Publications / CV design.
+  integrations: [mdx(), tailwind({ applyBaseStyles: false })]
 });

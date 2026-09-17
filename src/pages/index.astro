@@ -1,142 +1,120 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import HorizontalCard from "../components/HorizontalCard.astro";
-import { getCollection } from "astro:content";
-import createSlug from "../lib/createSlug"
+import SiteLayout from "../layouts/SiteLayout.astro";
+import HeroMesh from "../components/site/HeroMesh.astro";
+import PubCard from "../components/site/PubCard.astro";
+import { publications } from "../data/publications";
 
-const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const selected = publications.filter((pub) => pub.selected);
 
-const last_posts = posts.slice(0, 3);
+const keywords = ["3D Human Modeling", "Diffusion Models", "Video Models", "Distillation"];
 ---
 
-<meta name="google-site-verification" content="6rFXzqXbYKcgqdETtDqJOM4Usl1T-OKRQiuI5UtmNm8" />
+<SiteLayout active="home" image="/Arc2Avatar.jpeg">
+  <div class="hero">
+    <HeroMesh />
+    <p class="eyebrow">Imperial College London &middot; Department of Computing</p>
+    <h1>Dimitrios Gerogiannis</h1>
+    <p class="hero-sub">PhD candidate working on <strong>digital humans</strong>.</p>
 
-<BaseLayout sideBarActiveItemID="home" image="/Arc2Avatar.jpeg">
-  <div class="pb-12 mt-5">
-    <div class="text-5xl font-bold">Dimitrios Gerogiannis</div>
-    <div class="text-3xl py-3 font-bold">PhD Candidate, Imperial College London</div>
-    <div class="py-2">
-      <!-- Astrofy message -->
-      <!-- Your bio -->
-      <p class="text-lg mt-4">
-        Hi, I'm Dimitrios, but most people, including me, prefer to call me Dimitris. I am a PhD candidate in the 
-        <a 
-          href="https://www.imperial.ac.uk/computing" 
-          target="_blank" 
-          class="font-bold">
-          Department of Computing
-        </a>
-        at 
-        <a 
-          href="https://www.imperial.ac.uk" 
-          target="_blank" 
-          class="font-bold">
-          Imperial College London
-        </a>,
-        supervised by 
-        <a href="https://www.imperial.ac.uk/people/s.zafeiriou" target="_blank" class="font-bold">Professor Stefanos Zafeiriou</a>.
+    <div class="bio">
+      <p>
+        Hi, I'm Dimitrios, but most people, including me, prefer to call me Dimitris. I am a PhD candidate in the
+        <a href="https://www.imperial.ac.uk/computing" target="_blank" rel="noopener">Department of Computing</a> at
+        <a href="https://www.imperial.ac.uk" target="_blank" rel="noopener">Imperial College London</a>, supervised by
+        <a href="https://www.imperial.ac.uk/people/s.zafeiriou" target="_blank" rel="noopener">Professor Stefanos Zafeiriou</a>.
         My research lies at the intersection of Machine Learning, Computer Vision, and Graphics, with a particular focus on
-        Digital Humans. In more detail, I work on methods for 3D reconstruction from limited-view setups (as little as a single
-        image) to create realistic avatars using the advances in both 3D representations and generative models. My efforts are
-        also centered around making these avatars controllable so they can convey expressions, speech and animation in general.
-        I am also very interested in large-scale diffusion models, especially human-centric foundation models and their multiple
-        use cases in both the 2D and 3D domain. Recently, I’ve also been exploring video diffusion models for portrait animation,
-        with a focus on their real-time capabilities.
-        Prior to beginning my PhD, I graduated with a Diploma (BSc+MEng) in Computer Science
-        from the
-        <a 
-          href="https://www.ceid.upatras.gr/en/" 
-          target="_blank" 
-          class="font-bold">
-          Computer Engineering and Informatics Department
-        </a>
-        at the 
-        <a 
-          href="https://www.upatras.gr/en/" 
-          target="_blank" 
-          class="font-bold">
-          University of Patras
-        </a>, where I was advised by 
-        <a 
-          href="http://xanthippi.ceid.upatras.gr/people/psarakis/personal_gr.php" 
-          target="_blank" 
-          class="font-bold">
-          Professor Emmanouil Z. Psarakis
-        </a>
+        Digital Humans.
+      </p>
+      <p>
+        Prior to beginning my PhD, I graduated with a Diploma (BSc+MEng) in Computer Science from the
+        <a href="https://www.ceid.upatras.gr/en/" target="_blank" rel="noopener">Computer Engineering and Informatics Department</a> at the
+        <a href="https://www.upatras.gr/en/" target="_blank" rel="noopener">University of Patras</a>, where I was advised by
+        <a href="http://xanthippi.ceid.upatras.gr/people/psarakis/personal_gr.php" target="_blank" rel="noopener">Professor Emmanouil Z. Psarakis</a>
         for my thesis.
       </p>
     </div>
+
+    <div class="tags">
+      {keywords.map((keyword) => <span class="tag">{keyword}</span>)}
+    </div>
   </div>
 
-  <div>
-    <div class="text-3xl w-full font-bold mb-2">Selected Publications</div>
-  </div>
-  
-  <div class="divider my-4"></div>
+  <section class="section">
+    <div class="section-head">
+      <h2>Research Interests</h2>
+    </div>
+    <div class="grid-2">
+      <div class="topic">
+        <h4>Controllable Limited-View 3D Avatars</h4>
+        <p>
+          Reconstruction from limited-view setups, with an emphasis on single in-the-wild image inputs, using modern 3D
+          representations together with generative priors, and making the avatars controllable, so they can convey
+          realistic expressions, speech, and motion in general.
+        </p>
+      </div>
+      <div class="topic">
+        <h4>Diffusion Models</h4>
+        <p>
+          Large-scale (foundation) 2D diffusion models used as strong priors, and 3D diffusion models that operate directly
+          on 3D representations such as meshes, with a focus on human-centric models and the applications they unlock.
+        </p>
+      </div>
+      <div class="topic">
+        <h4>Video Models</h4>
+        <p>
+          Controllable video diffusion models for human-centric tasks, driven by modalities such as audio and parametric head
+          models for accurate animation, and their potential to be pushed toward real-time, streaming 2D avatars.
+        </p>
+      </div>
+      <div class="topic">
+        <h4>Distillation</h4>
+        <p>
+          Distilling strong 2D priors into lightweight generative models for 3D representations, so their potential carries
+          over to 3D generation.
+        </p>
+      </div>
+      <div class="topic">
+        <h4>PII-Free Solutions</h4>
+        <p>
+          Human data is sensitive by nature. I am interested in PII-free solutions: fine-tuning large priors on synthetic
+          human data to reach realistic results without requiring real data during training.
+        </p>
+      </div>
+    </div>
+  </section>
 
-  <HorizontalCard
-    title="Arc2Avatar: Generating Expressive 3D Avatars from a Single Image via ID Guidance"
-    img="/Arc2Avatar.jpeg"
-    url="https://arc2avatar.github.io/"
-    badge="CVPR"
-    target="_blank"
-    
-    authors={[
-      { name: "Dimitrios Gerogiannis", homepage: "https://dimgerogiannis.github.io/" },
-      { name: "Foivos Paraperas Papantoniou", homepage: "https://foivospar.github.io/" },
-      { name: "Rolandos Alexandros Potamias", homepage: "https://rolpotamias.github.io/" },
-      { name: "Alexandros Lattas", homepage: "https://alexlattas.com/" },
-      { name: "Stefanos Zafeiriou", homepage: "https://profiles.imperial.ac.uk/s.zafeiriou" }
-    ]}
-    publicationInfo="IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2025"
-    
-    arxivUrl="https://arxiv.org/pdf/2501.05379"
-    projectUrl="https://arc2avatar.github.io"
-    
-    bibCitation={`
-@article{gerogiannis2025arc2avatar,
-  title={Arc2Avatar: Generating Expressive 3D Avatars from a Single Image via ID Guidance},
-  author={Gerogiannis, Dimitrios and Papantoniou, Foivos Paraperas and Potamias, Rolandos Alexandros and Lattas, Alexandros and Zafeiriou, Stefanos},
-  journal={arXiv preprint arXiv:2501.05379},
-  year={2025}
-}
-    `}
-  />
+  <section class="section">
+    <div class="section-head">
+      <h2>News</h2>
+      <span class="meta">Latest first</span>
+    </div>
+    <div class="news">
+      <div class="news-item">
+        <span class="news-date">Feb 2026</span>
+        <span>Started as a <strong>Student Researcher</strong> at <strong>Google AR/VR</strong>, London!</span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">Jun 2025</span>
+        <span>Joined <strong>Meta Reality Labs</strong>, London, as a <strong>Research Scientist Intern</strong>!</span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">Feb 2025</span>
+        <span><strong>Arc2Avatar</strong> accepted at <strong>CVPR 2025</strong>!</span>
+      </div>
+      <div class="news-item">
+        <span class="news-date">Jul 2024</span>
+        <span><strong>AnimateMe</strong> accepted at <strong>ECCV 2024</strong>!</span>
+      </div>
+    </div>
+  </section>
 
-
-  <div class="divider my-0"></div>
-
-  <HorizontalCard
-    title="AnimateMe: 4D Facial Expressions via Diffusion Models"
-    img="/AnimateMe.jpeg"
-    url="https://arxiv.org/abs/2403.17213"
-    badge="ECCV"
-    target="_blank"
-    
-    authors={[
-      { name: "Dimitrios Gerogiannis", homepage: "https://dimgerogiannis.github.io/" },
-      { name: "Foivos Paraperas Papantoniou", homepage: "https://foivospar.github.io/" },
-      { name: "Rolandos Alexandros Potamias", homepage: "https://rolpotamias.github.io/" },
-      { name: "Alexandros Lattas", homepage: "https://alexlattas.com/" },
-      { name: "Stylianos Moschoglou", homepage: "https://www.doc.ic.ac.uk/~sm3515/" },
-      { name: "Stylianos Ploumpis", homepage: "https://www.ploumpis.com/" },
-      { name: "Stefanos Zafeiriou", homepage: "https://profiles.imperial.ac.uk/s.zafeiriou" }
-    ]}
-    publicationInfo="European Conference on Computer Vision (ECCV), 2024"
-    
-    arxivUrl="https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/09918.pdf"
-    
-    bibCitation={`
-@inproceedings{gerogiannis2024animateme,
-  title={Animateme: 4d facial expressions via diffusion models},
-  author={Gerogiannis, Dimitrios and Papantoniou, Foivos Paraperas and Potamias, Rolandos Alexandros and Lattas, Alexandros and Moschoglou, Stylianos and Ploumpis, Stylianos and Zafeiriou, Stefanos},
-  booktitle={European Conference on Computer Vision},
-  pages={270--287},
-  year={2024},
-  organization={Springer}
-}
-    `}
-  />
-
-
-</BaseLayout>
+  <section class="section">
+    <div class="section-head">
+      <h2>Selected Publications</h2>
+      <a class="meta" href="/publications">All publications &rarr;</a>
+    </div>
+    <div class="pubs">
+      {selected.map((pub) => <PubCard pub={pub} />)}
+    </div>
+  </section>
+</SiteLayout>

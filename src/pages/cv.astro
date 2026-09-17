@@ -1,127 +1,114 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import TimeLineElement from "../components/cv/TimeLine.astro";
-import EdTimeElement from "../components/cv/EdTimeElement.astro";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import CvItem from "../components/site/CvItem.astro";
 ---
 
-<BaseLayout title="Dimitrios Gerogiannis | CV" sideBarActiveItemID="cv">
-  <div class="mb-5">
-    <div class="text-3xl w-full font-bold">Curriculum Vitae</div>
-  </div>
+<SiteLayout active="cv" title="Dimitrios Gerogiannis | CV">
+  <h2 class="page-title">Curriculum Vitae</h2>
+  <p class="page-lede">Education, professional experience, and awards.</p>
 
-  <div class="mb-3">
-    <div class="text-3xl w-full font-bold">Education</div>
-  </div>
+  <section class="section" style="margin-top: 0;">
+    <div class="section-head"><h2>Education</h2></div>
+    <div class="timeline">
+      <CvItem
+        date="2022 – 2027"
+        title="PhD in Computing"
+        org="Imperial College London"
+        orgUrl="https://www.imperial.ac.uk/"
+        place="London, United Kingdom"
+        items={["3D Human Modeling", "Diffusion Models", "Video Models", "Distillation"]}
+        noteLabel="Supervisor"
+        noteName="Professor Stefanos Zafeiriou"
+        noteUrl="https://www.imperial.ac.uk/people/s.zafeiriou"
+      />
+      <CvItem
+        date="2017 – 2022"
+        title="BSc + MEng in Computer Science"
+        org="University of Patras"
+        orgUrl="https://www.upatras.gr/en/"
+        place="Patras, Greece"
+        items={[
+          "GPA: 9.15/10 — Valedictorian, Class of 2022",
+          "Diploma thesis: Robust image alignment under severe photometric distortions",
+        ]}
+        noteLabel="Advisor"
+        noteName="Professor Emmanouil Z. Psarakis"
+        noteUrl="http://xanthippi.ceid.upatras.gr/people/psarakis/personal_gr.php"
+      />
+    </div>
+  </section>
 
-  <div class="time-line-container grid gap-4 mb-8">
-    <EdTimeElement
-      date="2022 - 2027"
-      educationTitle="PhD in Computing"
-      university="Imperial College London, London, United Kingdom"
-      studyCenterUrl="https://www.imperial.ac.uk/"
-      additionalInfo={[
-        { text: "3D Human Modeling" },
-        { text: "3D Animation" },
-        { text: "3D Diffusion Models" },
-        { text: "Foundation Models" },
-        { text: "Video Diffusion Models" }
-      ]}
-      supervisor="Professor Stefanos Zafeiriou"
-      supervisorUrl="https://www.imperial.ac.uk/people/s.zafeiriou"
-    />
-    <EdTimeElement
-      date="2017 - 2022"
-      educationTitle="BSc + MEng in Computer Science"
-      university="University of Patras, Patras, Greece"
-      studyCenterUrl="https://www.upatras.gr/en/"
-      additionalInfo={[
-        { text: "GPA: 9.15/10 (Valedictorian, Class of 2022)" },
-        { text: "Diploma Thesis Title: Robust image alignment under severe photometric distortions" }
-      ]}
-      advisor="Professor Emmanouil Z. Psarakis"
-      advisorUrl="http://xanthippi.ceid.upatras.gr/people/psarakis/personal_gr.php"
-    />
-  </div>
+  <section class="section">
+    <div class="section-head"><h2>Professional Experience</h2></div>
+    <div class="timeline">
+      <CvItem
+        date="Feb 2026 – Sep 2026"
+        title="Student Researcher"
+        org="Google"
+        orgUrl="https://arvr.google.com"
+        place="London, United Kingdom"
+        logo="/google_arvr.png"
+        logoAlt="Google AR and VR"
+      />
+      <CvItem
+        date="Jun 2025 – Dec 2025"
+        title="Research Scientist Intern"
+        org="Meta"
+        orgUrl="https://tech.facebook.com/reality-labs/"
+        place="London, United Kingdom"
+        logo="/meta_reality_labs.png"
+        logoAlt="Meta Reality Labs"
+      />
+      <CvItem
+        date="Jan 2024 – May 2025"
+        title="Research Scientist Intern"
+        org="Alloyed Limited"
+        orgUrl="https://alloyed.com/"
+        place="Oxford, United Kingdom"
+        logo="/alloyed.png"
+        logoAlt="Alloyed"
+      />
+      <CvItem
+        date="Oct 2022 – Present"
+        title="Graduate Teaching Assistant"
+        org="Imperial College London"
+        orgUrl="https://www.imperial.ac.uk/computing/"
+        place="London, United Kingdom"
+        logo="/imperial.png"
+        logoAlt="Imperial College London"
+      />
+    </div>
+  </section>
 
-  <div class="mb-3">
-    <div class="text-3xl w-full font-bold">Experience</div>
-  </div>
-
-<div class="time-line-container mb-10">
-  <EdTimeElement
-    date="February 2026 - Present"
-    educationTitle="Student Researcher"
-    university="Google, London, United Kingdom"
-    studyCenterUrl="https://arvr.google.com"
-    imageSrc="/google_arvr.png"
-    imageAlt="Google AR and VR logo"
-    imageBoxClass="w-72 h-20 p-3 bg-white rounded-sm"
-  />
-
-  <EdTimeElement
-    date="June 2025 - December 2025"
-    educationTitle="Research Scientist Intern"
-    university="Meta, London, United Kingdom"
-    studyCenterUrl="https://tech.facebook.com/reality-labs/"
-    imageSrc="/meta_reality_labs.png"
-    imageAlt="Meta Reality Labs logo"
-    imageBoxClass="w-72 h-20 p-3 bg-white rounded-sm"
-    imageClass="max-w-full max-h-full object-contain scale-90"
-  />
-
-  <EdTimeElement
-    date="January 2024 - May 2025"
-    educationTitle="Research Scientist Intern"
-    university="Alloyed Limited, Oxford, United Kingdom"
-    studyCenterUrl="https://alloyed.com/"
-    imageSrc="/alloyed.png"
-    imageAlt="Alloyed logo"
-    imageBoxClass="w-72 h-20 p-3 bg-white rounded-sm"
-    imageClass="max-w-full max-h-full object-contain scale-95"
-  />
-
-  <EdTimeElement
-    date="October 2022 - Present"
-    educationTitle="Graduate Teaching Assistant"
-    university="Imperial College London, London, United Kingdom"
-    studyCenterUrl="https://www.imperial.ac.uk/computing/"
-    imageSrc="/imperial.png"
-    imageAlt="Imperial College London logo"
-    imageBoxClass="w-72 h-20 p-3 bg-white rounded-sm"
-    imageClass="max-w-full max-h-full object-contain scale-90"
-  />
-</div>
-
-  <div class="mb-3">
-    <div class="text-3xl w-full font-bold">Awards and Honors</div>
-  </div>
-
-  <div class="time-line-container mb-10">
-    <EdTimeElement
-      date="2022‐2027"
-      educationTitle="Doctoral Scholarship Award"
-      university="DoC Imperial College London, London, United Kingdom"
-      studyCenterUrl="https://www.imperial.ac.uk/computing/"
-      additionalInfo={[
-        { text: "Full scholarship covering tuition fees and a living stipend for the duration of the PhD program, awarded to students with strong distinction in their MSc degrees." }
-      ]}
-    />
-    <EdTimeElement
-      date="2022-2023"
-      educationTitle="Student Excellence Award"
-      university="States Scholarships Foundation, Athens, Greece"
-      studyCenterUrl="https://www.iky.gr/en/"
-      additionalInfo={[
-        { text: "Awarded to the students achieving the highest GPA in their respective departments nationwide." }
-      ]}
-    />
-    <EdTimeElement
-      date="2022-2023"
-      educationTitle="Graduate Excellence Honors"
-      university="University of Patras, Patras, Greece"
-      studyCenterUrl="https://www.upatras.gr/en/"
-      additionalInfo={[
-        { text: "Granted to the graduates who achieved the highest GPAs in their respective departments and classes." }
-      ]}
-    />
-</BaseLayout>
+  <section class="section">
+    <div class="section-head"><h2>Awards and Honors</h2></div>
+    <div class="timeline">
+      <CvItem
+        date="2022 – 2027"
+        title="Doctoral Scholarship Award"
+        org="DoC, Imperial College London"
+        orgUrl="https://www.imperial.ac.uk/computing/"
+        place="London, United Kingdom"
+        items={[
+          "Full scholarship covering tuition fees and a living stipend for the duration of the PhD program, awarded to students with strong distinction in their MSc degrees.",
+        ]}
+      />
+      <CvItem
+        date="2022 – 2023"
+        title="Student Excellence Award"
+        org="States Scholarships Foundation"
+        orgUrl="https://www.iky.gr/en/"
+        place="Athens, Greece"
+        items={["Awarded to the students achieving the highest GPA in their respective departments nationwide."]}
+      />
+      <CvItem
+        date="2022 – 2023"
+        title="Graduate Excellence Honors"
+        org="University of Patras"
+        orgUrl="https://www.upatras.gr/en/"
+        place="Patras, Greece"
+        items={["Granted to the graduates who achieved the highest GPAs in their respective departments and classes."]}
+      />
+    </div>
+  </section>
+</SiteLayout>

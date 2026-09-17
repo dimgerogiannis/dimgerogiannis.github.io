@@ -1,0 +1,114 @@
+<canvas id="mesh" aria-hidden="true"></canvas>
+
+<script>
+  // A wireframe grid deformed by travelling gaussian bumps: a quiet nod to the
+  // surface deformation that drives expressive 3D faces.
+  const canvas = document.getElementById("mesh") as HTMLCanvasElement | null;
+  const ctx = canvas?.getContext("2d");
+
+  if (canvas && ctx) {
+    const root = document.documentElement;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const COLS = 34;
+    const ROWS = 15;
+    const AMP = 30;
+    let W = 0;
+    let H = 0;
+    let rgb = "154, 51, 10";
+
+    const bumps = [
+      { x: 0.3, y: 0.45, r: 0.24, a: 1.0, sx: 0.000055, sy: 0.000031 },
+      { x: 0.68, y: 0.3, r: 0.19, a: -0.72, sx: -0.000041, sy: 0.000048 },
+      { x: 0.52, y: 0.72, r: 0.28, a: 0.55, sx: 0.000033, sy: -0.000026 },
+    ];
+
+    const height = (u: number, v: number) => {
+      let h = 0;
+      for (const b of bumps) {
+        const dx = (u - b.x) / b.r;
+        const dy = (v - b.y) / b.r;
+        h += b.a * Math.exp(-(dx * dx + dy * dy));
+      }
+      return h;
+    };
+
+    const project = (u: number, v: number): [number, number] => {
+      const persp = 0.82 + 0.18 * v;
+      return [(u - 0.5) * W * persp + W * 0.5, 14 + v * H * 0.9 - height(u, v) * AMP];
+    };
+
+    const strokeLine = (pts: [number, number][], alpha: number) => {
+      ctx.strokeStyle = `rgba(${rgb},${alpha.toFixed(3)})`;
+      ctx.beginPath();
+      ctx.moveTo(pts[0][0], pts[0][1]);
+      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+      ctx.stroke();
+    };
+
+    const draw = () => {
+      if (!W || !H) return;
+      ctx.save();
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.restore();
+      ctx.lineWidth = 1;
+
+      for (let r = 0; r <= ROWS; r++) {
+        const pts: [number, number][] = [];
+        for (let c = 0; c <= COLS; c++) pts.push(project(c / COLS, r / ROWS));
+        strokeLine(pts, 0.15 + 0.07 * (r / ROWS));
+      }
+      for (let c = 0; c <= COLS; c++) {
+        const pts: [number, number][] = [];
+        for (let r = 0; r <= ROWS; r++) pts.push(project(c / COLS, r / ROWS));
+        strokeLine(pts, 0.07);
+      }
+
+      // Mark the crests: the vertices that actually moved.
+      ctx.fillStyle = `rgba(${rgb},0.3)`;
+      for (let r = 0; r <= ROWS; r++) {
+        for (let c = 0; c <= COLS; c++) {
+          const u = c / COLS;
+          const v = r / ROWS;
+          if (Math.abs(height(u, v)) > 0.62) {
+            const [x, y] = project(u, v);
+            ctx.beginPath();
+            ctx.arc(x, y, 1.4, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      }
+    };
+
+    const build = () => {
+      rgb = getComputedStyle(root).getPropertyValue("--mesh").trim() || rgb;
+      W = canvas.clientWidth;
+      H = canvas.clientHeight;
+      // A zero-size canvas would be stretched into a solid block once visible again.
+      if (!W || !H) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      draw();
+    };
+
+    const tick = () => {
+      if (canvas.clientWidth !== W || canvas.clientHeight !== H) build();
+      for (const b of bumps) {
+        b.x += b.sx;
+        b.y += b.sy;
+        if (b.x < 0.12 || b.x > 0.88) b.sx *= -1;
+        if (b.y < 0.15 || b.y > 0.85) b.sy *= -1;
+      }
+      draw();
+      requestAnimationFrame(tick);
+    };
+
+    build();
+    if (!reduced) requestAnimationFrame(tick);
+    window.addEventListener("resize", build);
+    window.addEventListener("dg:theme", build);
+    if ("ResizeObserver" in window) new ResizeObserver(build).observe(canvas);
+  }
+</script>

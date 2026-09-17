@@ -1,0 +1,51 @@
+---
+interface Props {
+  date: string;
+  title: string;
+  org: string;
+  orgUrl?: string;
+  place?: string;
+  items?: string[];
+  noteLabel?: string;
+  noteName?: string;
+  noteUrl?: string;
+  logo?: string;
+  logoAlt?: string;
+}
+
+const { date, title, org, orgUrl, place, items = [], noteLabel, noteName, noteUrl, logo, logoAlt } = Astro.props;
+---
+
+<div class="tl-item">
+  <div class="tl-date">{date}</div>
+  <div class="tl-body">
+    <h3>{title}</h3>
+    <p class="tl-org">
+      {orgUrl ? <a href={orgUrl} target="_blank" rel="noopener">{org}</a> : org}{place && `, ${place}`}
+    </p>
+    {
+      items.length > 0 && (
+        <ul>
+          {items.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      )
+    }
+    {
+      noteLabel && noteName && (
+        <p class="tl-note">
+          <span class="label">{noteLabel}</span>
+          {noteUrl ? <a href={noteUrl} target="_blank" rel="noopener">{noteName}</a> : noteName}
+        </p>
+      )
+    }
+    {
+      logo && (
+        <div class="logo-box">
+          <img src={logo} alt={logoAlt ?? org} loading="lazy" />
+        </div>
+      )
+    }
+  </div>
+</div>
