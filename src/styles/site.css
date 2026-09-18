@@ -15,6 +15,10 @@
   --accent-soft: rgba(194, 65, 12, 0.10);
   --accent-line: rgba(194, 65, 12, 0.26);
   --mesh: 154, 51, 10;
+  --pattern: url("/patterns/pattern-light.webp");
+  --pattern-opacity: 0.34;
+  --veil: rgba(250, 246, 242, 0.88);
+  --veil-soft: rgba(250, 246, 242, 0.62);
   --shadow: 0 1px 2px rgba(60, 40, 28, .05), 0 12px 28px -18px rgba(60, 40, 28, .3);
   color-scheme: light;
 
@@ -39,6 +43,10 @@
     --accent-soft: rgba(139, 155, 255, 0.13);
     --accent-line: rgba(139, 155, 255, 0.3);
     --mesh: 150, 166, 255;
+    --pattern: url("/patterns/pattern-dark.webp");
+    --pattern-opacity: 0.4;
+    --veil: rgba(11, 13, 19, 0.86);
+    --veil-soft: rgba(11, 13, 19, 0.6);
     --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 16px 34px -20px rgba(0, 0, 0, .8);
     color-scheme: dark;
   }
@@ -58,6 +66,10 @@
   --accent-soft: rgba(139, 155, 255, 0.13);
   --accent-line: rgba(139, 155, 255, 0.3);
   --mesh: 150, 166, 255;
+  --pattern: url("/patterns/pattern-dark.webp");
+  --pattern-opacity: 0.4;
+  --veil: rgba(11, 13, 19, 0.86);
+  --veil-soft: rgba(11, 13, 19, 0.6);
   --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 16px 34px -20px rgba(0, 0, 0, .8);
   color-scheme: dark;
 }
@@ -78,6 +90,20 @@ body {
   margin: 0;
 }
 
+/* Decorative pattern: fixed behind the page, strongest in the margins and
+   veiled behind the sidebar and reading column so text and buttons stay clean. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--pattern);
+  background-size: 640px auto;
+  background-repeat: repeat;
+  opacity: var(--pattern-opacity);
+}
+
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 
@@ -90,6 +116,8 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoratio
   grid-template-columns: 372px minmax(0, 1fr);
   max-width: 1300px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .rail {
@@ -101,6 +129,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoratio
   flex-direction: column;
   padding: 40px 40px 28px 36px;
   border-right: 1px solid var(--line);
+  background: linear-gradient(to left, var(--veil) calc(100% - 36px), transparent);
 }
 
 .portrait {
@@ -195,7 +224,11 @@ nav.rail-nav {
 .socials a:hover { color: var(--accent); }
 .socials svg { width: 19px; height: 19px; display: block; fill: currentColor; }
 
-main { padding: 0 52px 96px; max-width: 800px; }
+main {
+  padding: 0 52px 96px;
+  max-width: 800px;
+  background: linear-gradient(to right, var(--veil) calc(100% - 64px), transparent);
+}
 
 .page { animation: fade .3s ease both; }
 @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
@@ -596,6 +629,9 @@ footer.site {
 }
 
 @media (max-width: 780px) {
+  .rail { background: var(--veil-soft); }
+  main { background: var(--veil); }
+  body::before { background-size: 460px auto; }
   .shell { grid-template-columns: 1fr; }
   .rail {
     position: static;
