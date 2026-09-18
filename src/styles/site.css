@@ -477,7 +477,7 @@ h2 {
 
 .tl-item {
   display: grid;
-  grid-template-columns: 132px minmax(0, 1fr);
+  grid-template-columns: 150px minmax(0, 1fr);
   gap: 24px;
   padding: 0 0 30px;
   position: relative;
@@ -485,7 +485,7 @@ h2 {
 .tl-item::before {
   content: "";
   position: absolute;
-  left: 153px;
+  left: 171px;
   top: 18px;
   bottom: -2px;
   width: 1px;
@@ -502,6 +502,7 @@ h2 {
   text-align: right;
   padding-top: 2px;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .tl-body { position: relative; padding-left: 22px; }
@@ -620,9 +621,21 @@ footer.site {
   .pub { grid-template-columns: minmax(0, 1fr); }
   .bibtex pre { white-space: pre-wrap; overflow-wrap: anywhere; }
   .pub-fig { max-width: 320px; }
-  .tl-item { grid-template-columns: 1fr; gap: 6px; }
-  .tl-item::before { display: none; }
-  .tl-date { text-align: left; }
+  .tl-item { grid-template-columns: minmax(0, 1fr); gap: 6px; padding-left: 24px; }
+  .tl-item::before { display: block; left: 5px; top: 18px; }
+  .tl-date { text-align: left; position: relative; }
+  .tl-date::before {
+    content: "";
+    position: absolute;
+    left: -23px;
+    top: 5px;
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+    background: var(--paper);
+    border: 1.5px solid var(--accent);
+    transform: rotate(45deg);
+  }
   .tl-body { padding-left: 0; }
   .tl-body::before { display: none; }
   .grid-2 { grid-template-columns: 1fr; }
