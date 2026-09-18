@@ -47,37 +47,39 @@ const keywords = ["3D Human Modeling", "Diffusion Models", "Video Models", "Dist
       <div class="topic">
         <h4>Controllable Limited-View 3D Avatars</h4>
         <p>
-          Reconstruction from limited-view setups, with an emphasis on single in-the-wild image inputs, using modern 3D
-          representations together with generative priors, and making the avatars controllable, so they can convey
-          realistic expressions, speech, and motion in general.
+          Creating animatable 3D avatars from sparse visual observations, with a particular emphasis on single, in-the-wild 
+          images. I am interested in combining modern 3D representations with strong generative priors to reconstruct observed 
+          appearance while plausibly completing unobserved regions. A central goal is to produce highly realistic avatars that 
+          remain controllable and can reproduce facial expressions, speech-driven motion, head pose, and broader human motion.
         </p>
       </div>
       <div class="topic">
         <h4>Diffusion Models</h4>
         <p>
-          Large-scale (foundation) image diffusion models used as strong priors, and diffusion models that operate directly
-          on 3D representations such as meshes, with a focus on human-centric models and the applications they unlock.
-        </p>
+          Large-scale (foundation) image diffusion models as powerful generative priors, as well as diffusion models that operate 
+          directly in 3D representation spaces, including meshes and other structured geometric representations. I am particularly
+          interested in how their learned priors can be transferred to downstream avatar generation tasks.
       </div>
       <div class="topic">
         <h4>Video Models</h4>
         <p>
-          Controllable video diffusion models for human-centric tasks, driven by audio and parametric head model parameters for accurate 
-          animation and reenactment, and their potential to be pushed toward real-time, streaming 2D avatars.
+          Controllable generative video models for human-centric tasks such as animation and reenactment, driven by explicit conditioning 
+          signals such as audio and parametric head-model parameters, as well as learned implicit features, with a focus on their potential 
+          for real-time, streaming 2D avatars.
         </p>
       </div>
       <div class="topic">
         <h4>Distillation</h4>
         <p>
-          Distilling strong 2D priors into lightweight generative models for 3D representations, so their potential carries
-          over to 3D generation.
+          Distilling the knowledge of strong image and video diffusion models into 3D, through both optimization-based approaches such as score 
+          distillation and self-distillation into efficient generative models for 3D representations, so their potential carries over to 3D generation.
         </p>
       </div>
       <div class="topic">
         <h4>PII-Free Solutions</h4>
         <p>
-          Human data is sensitive by nature. I am interested in PII-free solutions, fine-tuning large priors on synthetic human data to 
-          achieve realistic results without requiring real data during fine-tuning.
+          Human data is inherently sensitive. One of my priorities is reducing reliance on real-person data by fine-tuning large generative priors on 
+          synthetic human data, aiming to achieve realistic results while minimizing the use of personally identifiable data and bridging the synthetic-to-real domain gap.
         </p>
       </div>
     </div>
