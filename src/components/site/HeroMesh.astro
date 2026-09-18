@@ -12,6 +12,7 @@
     const COLS = 34;
     const ROWS = 15;
     const AMP = 30;
+    const SPEED = 3;
     let W = 0;
     let H = 0;
     let rgb = "154, 51, 10";
@@ -96,8 +97,8 @@
     const tick = () => {
       if (canvas.clientWidth !== W || canvas.clientHeight !== H) build();
       for (const b of bumps) {
-        b.x += b.sx;
-        b.y += b.sy;
+        b.x += b.sx * SPEED;
+        b.y += b.sy * SPEED;
         if (b.x < 0.12 || b.x > 0.88) b.sx *= -1;
         if (b.y < 0.15 || b.y > 0.85) b.sy *= -1;
       }
