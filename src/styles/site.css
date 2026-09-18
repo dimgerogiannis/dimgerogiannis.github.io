@@ -439,7 +439,9 @@ h2 {
 .action:hover { color: var(--accent); background: var(--accent-soft); text-decoration: none; }
 
 .bibtex { margin-top: 12px; display: none; }
-.bibtex.is-open { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; }
+.bibtex.is-open { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.bib-copy { align-self: flex-end; }
+.bibtex pre { min-width: 0; max-width: 100%; }
 .bib-copy {
   font-family: var(--f-mono);
   font-size: 10.5px;
@@ -615,7 +617,8 @@ footer.site {
   main { padding: 0 20px 64px; }
   .hero { padding-top: 16px; }
   #mesh { inset: 0 -20px auto -20px; width: calc(100% + 40px); }
-  .pub { grid-template-columns: 1fr; }
+  .pub { grid-template-columns: minmax(0, 1fr); }
+  .bibtex pre { white-space: pre-wrap; overflow-wrap: anywhere; }
   .pub-fig { max-width: 320px; }
   .tl-item { grid-template-columns: 1fr; gap: 6px; }
   .tl-item::before { display: none; }
