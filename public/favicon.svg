@@ -1,13 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 36 36">
-  <path fill="#000" d="M22.25 4h-8.5a1 1 0 0 0-.96.73l-5.54 19.4a.5.5 0 0 0 .62.62l5.05-1.44a2 2 0 0 0 1.38-1.4l3.22-11.66a.5.5 0 0 1 .96 0l3.22 11.67a2 2 0 0 0 1.38 1.39l5.05 1.44a.5.5 0 0 0 .62-.62l-5.54-19.4a1 1 0 0 0-.96-.73Z"/>
-  <path fill="url(#gradient)" d="M18 28a7.63 7.63 0 0 1-5-2c-1.4 2.1-.35 4.35.6 5.55.14.17.41.07.47-.15.44-1.8 2.93-1.22 2.93.6 0 2.28.87 3.4 1.72 3.81.34.16.59-.2.49-.56-.31-1.05-.29-2.46 1.29-3.25 3-1.5 3.17-4.83 2.5-6-.67.67-2.6 2-5 2Z"/>
-  <defs>
-    <linearGradient id="gradient" x1="16" x2="16" y1="32" y2="24" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#000"/>
-      <stop offset="1" stop-color="#000" stop-opacity="0"/>
-    </linearGradient>
-  </defs>
-	<style>
-    @media (prefers-color-scheme:dark){:root{filter:invert(100%)}}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .s { fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; }
+    @media (prefers-color-scheme: light) { .s { stroke: #1c1714; } }
   </style>
+  <defs><clipPath id="h"><path d="M21 62 L21 52 C14 48 9 40 9 30 C9 16 19 5 32 5 C43 5 50 12 50 21 L50 26 L56 34 L51 36 L52 40 L50.5 41.5 L52 44 C52 48 50 51 46 52 L41 53 L41 62 Z"/></clipPath><clipPath id="j"><rect width="64" height="51"/></clipPath></defs>
+  <g clip-path="url(#j)"><path class="s" d="M5 19 Q30 27 60 16 M4 33 Q30 41 60 30 M27 2 Q19 30 29 58 M40 2 Q35 30 43 58" stroke-width="2.6" clip-path="url(#h)"/></g>
+  <path class="s" d="M27 28 C23 27 22 32 23.5 35 C25 38 28.5 37 28.5 34" stroke-width="2.6"/>
+  <path class="s" d="M21 62 L21 52 C14 48 9 40 9 30 C9 16 19 5 32 5 C43 5 50 12 50 21 L50 26 L56 34 L51 36 L52 40 L50.5 41.5 L52 44 C52 48 50 51 46 52 L41 53 L41 62" stroke-width="4"/>
 </svg>
