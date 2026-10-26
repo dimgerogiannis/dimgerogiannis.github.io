@@ -179,21 +179,18 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoratio
   gap: 0 6px;
 }
 .role-line a { display: inline-flex; }
+/* The logo files are opaque with white backgrounds, so they sit on a white
+   chip that their own background merges into. Brand colours, both themes. */
 .role-logo {
   height: 12px;
   width: auto;
   object-fit: contain;
-  filter: grayscale(1) opacity(0.6);
-  transition: filter 0.2s ease;
+  background: #fff;
+  border-radius: 2px;
+  padding: 1.5px 3px;
+  box-shadow: 0 0 0 1px var(--line);
 }
 .role-logo.is-imperial { height: 10px; }
-.role-line a:hover .role-logo { filter: none; }
-
-/* On dark both marks are dark-on-light, so invert them to read as white. */
-:root[data-theme="dark"] .role-logo { filter: grayscale(1) opacity(0.62) invert(1); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .role-logo { filter: grayscale(1) opacity(0.62) invert(1); }
-}
 
 nav.rail-nav {
   margin-top: 30px;
@@ -611,14 +608,11 @@ h2 {
   max-height: 38px;
   max-width: 188px;
   object-fit: contain;
-  filter: grayscale(1) opacity(.62);
-  transition: filter .2s ease;
+  background: #fff;
+  border-radius: 4px;
+  padding: 4px 7px;
+  box-shadow: 0 0 0 1px var(--line);
 }
-:root[data-theme="dark"] .logo-box img { filter: grayscale(1) opacity(.55) invert(1); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .logo-box img { filter: grayscale(1) opacity(.55) invert(1); }
-}
-.tl-item:hover .logo-box img { filter: none; }
 
 footer.site {
   margin-top: 72px;
