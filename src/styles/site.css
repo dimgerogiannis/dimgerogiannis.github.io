@@ -174,24 +174,20 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoratio
 }
 .affiliations a { display: inline-flex; }
 .affiliations img {
-  height: 17px;
+  height: 15px;
   width: auto;
   object-fit: contain;
   filter: grayscale(1) opacity(0.6);
   transition: filter 0.2s ease;
 }
 .affiliations a:last-child img { height: 13px; }
-/* Hover restores Google's own colours; Imperial is monochrome either way. */
+/* Hover reveals the real logo, exactly like the CV timeline. */
 .affiliations a:hover img { filter: none; }
 
-/* On dark both marks are dark-on-dark, so invert them to read as white. */
+/* On dark both marks are dark-on-light, so invert them to read as white. */
 :root[data-theme="dark"] .affiliations img { filter: grayscale(1) opacity(0.62) invert(1); }
-:root[data-theme="dark"] .affiliations a:first-child:hover img { filter: none; }
-:root[data-theme="dark"] .affiliations a:last-child:hover img { filter: invert(1); }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .affiliations img { filter: grayscale(1) opacity(0.62) invert(1); }
-  :root:not([data-theme="light"]) .affiliations a:first-child:hover img { filter: none; }
-  :root:not([data-theme="light"]) .affiliations a:last-child:hover img { filter: invert(1); }
 }
 
 nav.rail-nav {
