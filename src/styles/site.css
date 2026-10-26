@@ -15,7 +15,7 @@
   --accent-soft: rgba(194, 65, 12, 0.10);
   --accent-line: rgba(194, 65, 12, 0.26);
   --mesh: 154, 51, 10;
-  --pattern: url("/patterns/pattern-light.webp");
+  --pattern-tint: rgb(192, 65, 13);
   --pattern-opacity: 0.34;
   --veil: rgba(250, 246, 242, 0.88);
   --veil-soft: rgba(250, 246, 242, 0.62);
@@ -43,7 +43,7 @@
     --accent-soft: rgba(139, 155, 255, 0.13);
     --accent-line: rgba(139, 155, 255, 0.3);
     --mesh: 150, 166, 255;
-    --pattern: url("/patterns/pattern-dark.webp");
+    --pattern-tint: rgb(94, 89, 247);
     --pattern-opacity: 0.4;
     --veil: rgba(11, 13, 19, 0.86);
     --veil-soft: rgba(11, 13, 19, 0.6);
@@ -66,7 +66,7 @@
   --accent-soft: rgba(139, 155, 255, 0.13);
   --accent-line: rgba(139, 155, 255, 0.3);
   --mesh: 150, 166, 255;
-  --pattern: url("/patterns/pattern-dark.webp");
+  --pattern-tint: rgb(94, 89, 247);
   --pattern-opacity: 0.4;
   --veil: rgba(11, 13, 19, 0.86);
   --veil-soft: rgba(11, 13, 19, 0.6);
@@ -91,16 +91,22 @@ body {
 }
 
 /* Decorative pattern: fixed behind the page, strongest in the margins and
-   veiled behind the sidebar and reading column so text and buttons stay clean. */
+   veiled behind the sidebar and reading column so text and buttons stay clean.
+   The artwork ships once as a mask and is tinted per theme, so switching
+   themes recolours it instead of fetching a second copy. */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-image: var(--pattern);
-  background-size: 640px auto;
-  background-repeat: repeat;
+  background-color: var(--pattern-tint);
+  -webkit-mask-image: url("/patterns/pattern.webp");
+  mask-image: url("/patterns/pattern.webp");
+  -webkit-mask-size: 640px auto;
+  mask-size: 640px auto;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
   opacity: var(--pattern-opacity);
 }
 
@@ -646,7 +652,7 @@ footer.site {
 @media (max-width: 780px) {
   .rail { background: var(--veil-soft); }
   main { background: var(--veil); }
-  body::before { background-size: 460px auto; }
+  body::before { -webkit-mask-size: 460px auto; mask-size: 460px auto; }
   .shell { grid-template-columns: 1fr; }
   .rail {
     position: static;

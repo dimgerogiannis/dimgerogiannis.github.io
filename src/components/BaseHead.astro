@@ -16,6 +16,10 @@ const { title, description, image = '/portrait.jpg', ogType = 'website' } = Astr
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
+<!-- The page pattern is only reachable through the stylesheet, so without this
+     it is not requested until the CSS has parsed. -->
+<link rel="preload" as="image" type="image/webp" href="/patterns/pattern.webp" />
+
 <!-- White monogram with a dark halo, so it reads on light and dark tab bars alike. -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=dg4" />
 <link rel="icon" type="image/x-icon" href="/favicon.ico?v=dg4" sizes="16x16 32x32 48x48 64x64" />
